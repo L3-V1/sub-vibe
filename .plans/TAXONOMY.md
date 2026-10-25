@@ -27,3 +27,5 @@ features, fixes, refactors, spikes, docs, chores
         - [M0 · Fundação do projeto (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-00/milestone-00-fundacao-do-projeto.md)
       - **milestone-01/**
         - [M1 · Núcleo de domínio (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-01/milestone-01-nucleo-de-dominio.md)
+      - **milestone-02/**
+        - [M2 · Persistência local (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-02/milestone-02-persistencia-local.md)
