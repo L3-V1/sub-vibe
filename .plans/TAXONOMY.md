@@ -29,3 +29,5 @@ features, fixes, refactors, spikes, docs, chores
         - [M1 · Núcleo de domínio (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-01/milestone-01-nucleo-de-dominio.md)
       - **milestone-02/**
         - [M2 · Persistência local (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-02/milestone-02-persistencia-local.md)
+      - **milestone-03/**
+        - [M3 · Gestão de Assinaturas e Categorias (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-03/milestone-03-gestao-assinaturas-categorias.md)
