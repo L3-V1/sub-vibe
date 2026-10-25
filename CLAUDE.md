@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado atual
 
-M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. `src/domain/` e `src/db/` ainda vazios (M1/M2). Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
+M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. M1 (núcleo de domínio) concluído: `src/domain/` com tipos (`tipos.ts`, datas como `DataISO` `'AAAA-MM-DD'`), invariantes e estado (`assinatura.ts`), Cobranças e Próximo vencimento (`cobrancas.ts`), custos e gastos (`custos.ts`), com 100% de cobertura (`npm run test:coverage`). `src/db/` ainda vazio (M2). Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
 
 ## O que é
 
@@ -38,7 +38,7 @@ Stack: React + Vite + TypeScript, Tailwind CSS v4, React Router, Vitest + Testin
 - Cada Vigência recomeça a contagem: vencimentos são `inicio + k·N` a partir da âncora da Vigência, nunca somados iterativamente (para não perder o dia original). No ciclo mensal, dia inexistente (ex.: 31) cai no último dia do mês e volta ao dia original no mês seguinte.
 - Dinheiro sempre em centavos inteiros.
 - Custo mensal equivalente usa a Vigência vigente hoje: mês → valor/N, ano → valor/12N, semana → valor·52/12N, dia → valor·365/12N.
-- Invariantes: Vigências ordenadas e sem sobreposição; `fim` só na última; cancelamento ≥ início.
+- Invariantes: Vigências ordenadas e sem sobreposição; `fim` em qualquer Vigência, e a próxima começa depois do `fim`; cancelamento ≥ início.
 
 ## Vocabulário
 

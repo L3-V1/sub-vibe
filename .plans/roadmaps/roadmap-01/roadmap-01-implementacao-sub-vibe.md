@@ -55,7 +55,7 @@ O coração do sistema, porque Cobranças nunca são persistidas (ADR 0002).
   - `custoMensalEquivalente(assinatura, hoje)` com a Vigência vigente hoje. Fatores:
     mês → valor/N, ano → valor/12N, semana → valor·52/12N, dia → valor·365/12N.
   - `gastoAcumulado(assinaturas, de, ate)` e `gastoPorCategoria(...)`.
-  - Invariantes: Vigências em ordem e sem sobreposição; `fim` só na última; cancelamento ≥ início.
+  - Invariantes: Vigências em ordem e sem sobreposição; `fim` em qualquer Vigência, e a próxima começa depois do `fim`; cancelamento ≥ início.
 - Testes de casos-limite: 31/01 mensal, 29/02 anual, troca de ciclo no meio do mês, Vigência futura,
   Período gratuito (R$ 0), cancelar e reativar, Cobrança exatamente no dia do cancelamento.
 
