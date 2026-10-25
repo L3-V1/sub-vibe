@@ -82,7 +82,7 @@ export function DialogoCancelar({ assinatura, onFechar }: Props) {
         Depois da Data de cancelamento não há mais Cobranças. Uma data futura
         mantém a Assinatura Ativa até lá.
       </p>
-      <label className={`${rotulo} max-w-xs`}>
+      <label className={rotulo}>
         Data de cancelamento
         <input type="date" name="fim" defaultValue={hoje()} className={campo} />
       </label>

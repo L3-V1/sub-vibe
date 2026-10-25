@@ -5,7 +5,8 @@ import { useAssinatura, useCategorias } from '../../db/hooks'
 import { desfazerUltimo, estado, vigenciaEm } from '../../domain/assinatura'
 import { cobrancasNoIntervalo } from '../../domain/cobrancas'
 import type { Assinatura, DataISO } from '../../domain/tipos'
-import { botaoPequeno } from '../../shared/estilos'
+import { EstadoVazio } from '../../shared/EstadoVazio'
+import { botaoPequeno, cartao } from '../../shared/estilos'
 import {
   formatarCiclo,
   formatarDataISO,
@@ -124,8 +125,6 @@ export function AssinaturaPage() {
   )
 }
 
-const cartao = 'rounded-lg border border-slate-200 bg-white p-4'
-
 /** Até 5 Cobranças nos próximos 12 meses; Período gratuito não gera Cobranças. */
 function ProximasCobrancas({
   assinatura,
@@ -141,9 +140,11 @@ function ProximasCobrancas({
     <section aria-label="Próximas Cobranças" className={cartao}>
       <h2 className="mb-3 text-lg font-semibold">Próximas Cobranças</h2>
       {cobrancas.length === 0 ? (
-        <p className="text-sm text-slate-600">
-          Nenhuma Cobrança prevista nos próximos 12 meses.
-        </p>
+        <EstadoVazio icone="calendario">
+          <p className="text-sm">
+            Nenhuma Cobrança prevista nos próximos 12 meses.
+          </p>
+        </EstadoVazio>
       ) : (
         <ul className="divide-y divide-slate-100">
           {cobrancas.map((c) => (
@@ -160,7 +161,8 @@ function ProximasCobrancas({
   )
 }
 
-const marcador = 'rounded-full px-2 py-0.5 text-xs font-medium'
+const marcador =
+  'rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap'
 const marcadorNeutro = `${marcador} bg-slate-100 text-slate-700`
 
 function LinhaDoTempo({

@@ -1,8 +1,8 @@
 import { gastoPorCategoria } from '../../domain/custos'
 import type { Assinatura, Categoria, DataISO } from '../../domain/tipos'
+import { EstadoVazio } from '../../shared/EstadoVazio'
+import { cartao } from '../../shared/estilos'
 import { formatarMoeda } from '../../shared/formatacao'
-
-const cartao = 'rounded-lg border border-slate-200 bg-white p-4'
 
 const porcentagem = new Intl.NumberFormat('pt-BR', {
   style: 'percent',
@@ -31,14 +31,16 @@ export function GastoPorCategoria({
     <section aria-label="Gasto por Categoria" className={cartao}>
       <h2 className="mb-3 text-lg font-semibold">Gasto por Categoria</h2>
       {linhas.length === 0 ? (
-        <p className="text-sm text-slate-600">Nenhum gasto nesse período.</p>
+        <EstadoVazio icone="grafico">
+          <p className="text-sm">Nenhum gasto nesse período.</p>
+        </EstadoVazio>
       ) : (
         <div className="flex flex-col gap-6">
           <ul aria-hidden="true" className="flex flex-col gap-2">
             {linhas.map((l) => (
               <li
                 key={l.id}
-                className="grid grid-cols-[8rem_1fr_7rem] items-center gap-3 text-sm"
+                className="grid grid-cols-[6rem_1fr_auto] items-center gap-3 text-sm sm:grid-cols-[8rem_1fr_7rem]"
               >
                 <span className="truncate">{l.nome}</span>
                 <span className="h-4 rounded bg-slate-100">

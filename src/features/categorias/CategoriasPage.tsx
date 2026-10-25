@@ -3,11 +3,14 @@ import { categoriasRepo } from '../../db/categoriasRepo'
 import { useAssinaturas, useCategorias } from '../../db/hooks'
 import type { Categoria } from '../../domain/tipos'
 import { Dialogo } from '../../shared/Dialogo'
+import { EstadoVazio } from '../../shared/EstadoVazio'
 import {
   botaoPequeno,
   botaoPrimario,
   botaoSecundario,
   campo,
+  cartao,
+  cartaoVazio,
   rotulo,
 } from '../../shared/estilos'
 import { ListaErros } from '../../shared/ListaErros'
@@ -43,7 +46,7 @@ export function CategoriasPage() {
       <form
         noValidate
         onSubmit={criacao.enviar}
-        className="flex max-w-md flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4"
+        className={`${cartao} flex max-w-md flex-col gap-3`}
       >
         <div>
           <label htmlFor={idNome} className={rotulo}>
@@ -62,7 +65,11 @@ export function CategoriasPage() {
       {categorias === undefined || assinaturas === undefined ? (
         <p className="text-slate-600">Carregando…</p>
       ) : categorias.length === 0 ? (
-        <p className="text-slate-600">Nenhuma Categoria cadastrada.</p>
+        <div className={cartaoVazio}>
+          <EstadoVazio icone="categorias">
+            <p>Nenhuma Categoria cadastrada.</p>
+          </EstadoVazio>
+        </div>
       ) : (
         <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
           {categorias.map((c) => (
@@ -139,7 +146,7 @@ function FormularioRenomear({
           name="nome"
           defaultValue={categoria.nome}
           autoFocus
-          className={`${campo} max-w-sm`}
+          className={campo}
         />
       </label>
       <ListaErros erros={erros} />

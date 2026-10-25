@@ -9,14 +9,11 @@ import {
 import { ErroValidacao } from '../../db/esquemas'
 import { useAssinaturas, useCategorias } from '../../db/hooks'
 import { Dialogo } from '../../shared/Dialogo'
-import { botaoPrimario, campo, rotulo } from '../../shared/estilos'
+import { botaoPrimario, campo, cartao, rotulo } from '../../shared/estilos'
 import { formatarData, hoje } from '../../shared/formatacao'
 import { ListaErros } from '../../shared/ListaErros'
 import { useAvisos } from '../../shared/useAvisos'
 import { useEnvio } from '../../shared/useEnvio'
-
-const cartao =
-  'flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4'
 
 export function BackupPage() {
   const avisar = useAvisos()
@@ -53,7 +50,7 @@ export function BackupPage() {
         </p>
       </div>
 
-      <div className={`${cartao} max-w-md`}>
+      <div className={`${cartao} flex max-w-md flex-col gap-3`}>
         <h2 className="text-lg font-semibold">Exportar</h2>
         <p className="text-sm text-slate-600">
           Baixa um arquivo JSON com Categorias, Assinaturas e preferências.
@@ -67,7 +64,11 @@ export function BackupPage() {
         </button>
       </div>
 
-      <form noValidate onSubmit={enviar} className={`${cartao} max-w-md`}>
+      <form
+        noValidate
+        onSubmit={enviar}
+        className={`${cartao} flex max-w-md flex-col gap-3`}
+      >
         <h2 className="text-lg font-semibold">Importar</h2>
         <p className="text-sm text-slate-600">
           Substitui todos os dados atuais pelos do arquivo.

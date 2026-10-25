@@ -8,6 +8,7 @@ import {
   botaoPrimario,
   botaoSecundario,
   campo,
+  cartao,
   rotulo,
 } from '../../shared/estilos'
 import { hoje } from '../../shared/formatacao'
@@ -62,7 +63,7 @@ export function NovaAssinaturaPage() {
         <form
           noValidate
           onSubmit={enviar}
-          className="flex max-w-2xl flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6"
+          className={`${cartao} flex max-w-2xl flex-col gap-4`}
         >
           <CamposBasicos categorias={categorias} />
           <CamposVigencia padrao={{ inicio: hoje() }} />
@@ -75,7 +76,7 @@ export function NovaAssinaturaPage() {
             Começa com Período gratuito
           </label>
           {gratuito && (
-            <label className={`${rotulo} max-w-xs`}>
+            <label className={rotulo}>
               Primeira Cobrança em
               <input type="date" name="primeiraCobranca" className={campo} />
             </label>

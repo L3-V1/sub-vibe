@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react'
-import { botaoPerigo, botaoPrimario, botaoSecundario } from './estilos'
+import { botaoPerigo, botaoPrimario, botaoSecundario, respiro } from './estilos'
 import { ListaErros } from './ListaErros'
 import { useEnvio } from './useEnvio'
 
@@ -36,9 +36,13 @@ export function Dialogo({
       ref={ref}
       aria-labelledby={idTitulo}
       onClose={onFechar}
-      className="m-auto w-full max-w-md rounded-lg bg-white p-0 text-slate-900 shadow-xl backdrop:bg-slate-900/50"
+      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-lg bg-white p-0 text-slate-900 shadow-xl backdrop:bg-slate-900/50"
     >
-      <form noValidate onSubmit={enviar} className="flex flex-col gap-4 p-6">
+      <form
+        noValidate
+        onSubmit={enviar}
+        className={`flex flex-col gap-4 ${respiro}`}
+      >
         <h2 id={idTitulo} className="text-lg font-semibold">
           {titulo}
         </h2>

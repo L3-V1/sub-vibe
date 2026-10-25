@@ -4,7 +4,8 @@ import { useAssinaturas, useCategorias } from '../../db/hooks'
 import { estado } from '../../domain/assinatura'
 import { proximoVencimento } from '../../domain/cobrancas'
 import { custoMensalEquivalente } from '../../domain/custos'
-import { botaoPrimario, campo, rotulo } from '../../shared/estilos'
+import { EstadoVazio } from '../../shared/EstadoVazio'
+import { botaoPrimario, campo, cartaoVazio, rotulo } from '../../shared/estilos'
 import { formatarDataISO, formatarMoeda, hoje } from '../../shared/formatacao'
 import { EtiquetaEstado } from './EtiquetaEstado'
 
@@ -43,14 +44,13 @@ export function AssinaturasPage() {
     return (
       <section className="flex flex-col gap-6">
         {cabecalho}
-        <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
-          <p className="text-slate-600">Nenhuma Assinatura cadastrada.</p>
-          <Link
-            to="/assinaturas/nova"
-            className={`${botaoPrimario} mt-4 inline-block`}
-          >
-            Cadastrar a primeira Assinatura
-          </Link>
+        <div className={cartaoVazio}>
+          <EstadoVazio icone="assinaturas">
+            <p>Nenhuma Assinatura cadastrada.</p>
+            <Link to="/assinaturas/nova" className={`${botaoPrimario} mt-1`}>
+              Cadastrar a primeira Assinatura
+            </Link>
+          </EstadoVazio>
         </div>
       </section>
     )
@@ -102,9 +102,11 @@ export function AssinaturasPage() {
       </div>
 
       {linhas.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
-          Nenhuma Assinatura com esses filtros.
-        </p>
+        <div className={cartaoVazio}>
+          <EstadoVazio icone="filtro">
+            <p>Nenhuma Assinatura com esses filtros.</p>
+          </EstadoVazio>
+        </div>
       ) : (
         <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
           <table className="w-full text-left text-sm">

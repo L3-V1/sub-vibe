@@ -9,11 +9,16 @@ import {
   type Periodo,
 } from '../../domain/painel'
 import type { Assinatura, DataISO } from '../../domain/tipos'
-import { botaoPrimario, campo, rotulo } from '../../shared/estilos'
+import { EstadoVazio } from '../../shared/EstadoVazio'
+import {
+  botaoPrimario,
+  campo,
+  cartao,
+  cartaoVazio,
+  rotulo,
+} from '../../shared/estilos'
 import { formatarDataISO, formatarMoeda, hoje } from '../../shared/formatacao'
 import { GastoPorCategoria } from './GastoPorCategoria'
-
-const cartao = 'rounded-lg border border-slate-200 bg-white p-4'
 
 const cabecalho = (
   <div>
@@ -47,14 +52,13 @@ export function PainelPage() {
     return (
       <section className="flex flex-col gap-6">
         {cabecalho}
-        <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
-          <p className="text-slate-600">Nenhuma Assinatura cadastrada.</p>
-          <Link
-            to="/assinaturas/nova"
-            className={`${botaoPrimario} mt-4 inline-block`}
-          >
-            Cadastrar a primeira Assinatura
-          </Link>
+        <div className={cartaoVazio}>
+          <EstadoVazio icone="assinaturas">
+            <p>Nenhuma Assinatura cadastrada.</p>
+            <Link to="/assinaturas/nova" className={`${botaoPrimario} mt-1`}>
+              Cadastrar a primeira Assinatura
+            </Link>
+          </EstadoVazio>
         </div>
       </section>
     )
@@ -150,7 +154,9 @@ function ProximosVencimentos({
       <h2 className="text-lg font-semibold">Próximos vencimentos</h2>
       <p className="mb-3 text-sm text-slate-600">{janela}</p>
       {cobrancas.length === 0 ? (
-        <p className="text-sm text-slate-600">{vazio}</p>
+        <EstadoVazio icone="calendario">
+          <p className="text-sm">{vazio}</p>
+        </EstadoVazio>
       ) : (
         <ul className="divide-y divide-slate-100">
           {cobrancas.map((c) => (

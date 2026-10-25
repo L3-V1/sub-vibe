@@ -1,6 +1,6 @@
 import { usePreferencias } from '../../db/hooks'
 import { preferenciasRepo } from '../../db/preferenciasRepo'
-import { botaoPrimario, campo, rotulo } from '../../shared/estilos'
+import { botaoPrimario, campo, cartao, rotulo } from '../../shared/estilos'
 import { ListaErros } from '../../shared/ListaErros'
 import { useAvisos } from '../../shared/useAvisos'
 import { useEnvio } from '../../shared/useEnvio'
@@ -28,7 +28,7 @@ export function ConfiguracoesPage() {
         <form
           noValidate
           onSubmit={enviar}
-          className="flex max-w-md flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4"
+          className={`${cartao} flex max-w-md flex-col gap-3`}
         >
           <label className={rotulo}>
             Janela de vencimentos (dias)
@@ -38,7 +38,7 @@ export function ConfiguracoesPage() {
               min={1}
               step={1}
               defaultValue={preferencias.janelaVencimentosDias}
-              className={`${campo} max-w-32`}
+              className={campo}
             />
           </label>
           <p className="text-sm text-slate-600">

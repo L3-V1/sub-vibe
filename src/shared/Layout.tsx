@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router'
 import { AvisosProvider } from './Avisos'
+import { focoVisivel } from './estilos'
 
 const links = [
   { to: '/', rotulo: 'Painel' },
@@ -24,7 +25,7 @@ export function Layout() {
                       to={to}
                       end={to === '/'}
                       className={({ isActive }) =>
-                        `block rounded-md px-3 py-1.5 text-sm font-medium ${
+                        `block rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap ${focoVisivel} ${
                           isActive
                             ? 'bg-indigo-100 text-indigo-800'
                             : 'text-slate-700 hover:bg-slate-100'

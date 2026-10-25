@@ -25,4 +25,6 @@ export const rotas: RouteObject[] = [
   },
 ]
 
-export const router = createBrowserRouter(rotas)
+export const router = createBrowserRouter(rotas, {
+  basename: import.meta.env.BASE_URL,
+})
