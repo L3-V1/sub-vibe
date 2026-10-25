@@ -60,3 +60,36 @@ export function vigenciaEm(a: Assinatura, data: DataISO): Vigencia | undefined {
     )
   })
 }
+
+// As transformações abaixo só montam a nova lista de Vigências; quem grava valida.
+
+/** Cancelamento: Data de cancelamento na última Vigência. */
+export function cancelar(a: Assinatura, data: DataISO): Assinatura {
+  const vigencias = [...a.vigencias]
+  vigencias[vigencias.length - 1] = {
+    ...vigencias[vigencias.length - 1],
+    fim: data,
+  }
+  return { ...a, vigencias }
+}
+
+/** Nova Vigência ao final; também serve para a Reativação. */
+export function adicionarVigencia(a: Assinatura, v: Vigencia): Assinatura {
+  return { ...a, vigencias: [...a.vigencias, v] }
+}
+
+/**
+ * Desfaz o último registro: remove a Data de cancelamento da última Vigência ou,
+ * sem ela, remove a última Vigência. `undefined` se só resta uma Vigência aberta.
+ */
+export function desfazerUltimo(a: Assinatura): Assinatura | undefined {
+  const ultima = a.vigencias.at(-1)
+  if (ultima?.fim !== undefined) {
+    const { fim: _fim, ...semFim } = ultima
+    return { ...a, vigencias: [...a.vigencias.slice(0, -1), semFim] }
+  }
+  if (a.vigencias.length > 1) {
+    return { ...a, vigencias: a.vigencias.slice(0, -1) }
+  }
+  return undefined
+}

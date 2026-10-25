@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado atual
 
-M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. M1 (núcleo de domínio) concluído: `src/domain/` com tipos (`tipos.ts`, datas como `DataISO` `'AAAA-MM-DD'`), invariantes e estado (`assinatura.ts`), Cobranças e Próximo vencimento (`cobrancas.ts`), custos e gastos (`custos.ts`), com 100% de cobertura (`npm run test:coverage`). M2 (persistência local) concluído: `src/db/` com Dexie (`db.ts`, schema v1, Categorias iniciais no `populate`), schemas Zod e `ErroValidacao` (`esquemas.ts`), repositórios (`categoriasRepo`, `assinaturasRepo`, `preferenciasRepo`) e hooks `useLiveQuery` (`hooks.ts`); `main.tsx` chama `navigator.storage.persist()`. Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
+M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. M1 (núcleo de domínio) concluído: `src/domain/` com tipos (`tipos.ts`, datas como `DataISO` `'AAAA-MM-DD'`), invariantes e estado (`assinatura.ts`), Cobranças e Próximo vencimento (`cobrancas.ts`), custos e gastos (`custos.ts`), com 100% de cobertura (`npm run test:coverage`). M2 (persistência local) concluído: `src/db/` com Dexie (`db.ts`, schema v1, Categorias iniciais no `populate`), schemas Zod e `ErroValidacao` (`esquemas.ts`), repositórios (`categoriasRepo`, `assinaturasRepo`, `preferenciasRepo`) e hooks `useLiveQuery` (`hooks.ts`); `main.tsx` chama `navigator.storage.persist()`. M3 (gestão de Assinaturas e Categorias) concluído: transformações puras `cancelar`, `adicionarVigencia` e `desfazerUltimo` no domínio, `categoriasRepo.excluir(id, destinoId?)` move as Assinaturas antes de excluir, telas de Categorias e de Assinaturas (lista com filtros, cadastro com Período gratuito opcional, detalhe com linha do tempo, próximas Cobranças e diálogos de ação). Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
 
 ## O que é
 
@@ -27,8 +27,9 @@ Stack: React + Vite + TypeScript, Tailwind CSS v4, React Router, Vitest + Testin
 - `src/domain/`: regras puras, sem React nem Dexie. É o coração do sistema e deve ser muito testado.
 - `src/db/`: Dexie (`db.ts`, schema versionado) e repositórios finos (`*Repo.ts`) que validam as invariantes do domínio antes de gravar. Leitura reativa via `useLiveQuery`.
 - `src/features/<área>/`: telas (`painel`, `assinaturas`, `categorias`, `configuracoes`; o backup chega no M5).
-- `src/router.tsx`: exporta `rotas` (reusadas nos testes com `createMemoryRouter`) e `router`.
-- `src/shared/`: formatação de moeda/data pt-BR e componentes de UI.
+- `src/router.tsx`: exporta `rotas` (reusadas nos testes via `renderizar(caminho)` de `src/test/renderizar.tsx`) e `router`. Rotas: `/`, `/assinaturas`, `/assinaturas/nova`, `/assinaturas/:id`, `/categorias`, `/configuracoes`.
+- `src/shared/`: formatação pt-BR (`formatacao.ts`: moeda, `lerMoeda`, datas, `formatarCiclo`, `hoje()`), `Dialogo` (`<dialog>` modal com formulário), avisos de sucesso (`AvisosProvider` no `Layout` + `useAvisos`), `useEnvio` (envio de formulário que mostra as mensagens de `ErroValidacao` em `ListaErros`) e classes Tailwind comuns (`estilos.ts`).
+- Testes de tela: datas fixas com `vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime`; o setup simula `showModal`/`close` do `<dialog>`, que o jsdom não implementa.
 
 ### Decisões que moldam o código
 

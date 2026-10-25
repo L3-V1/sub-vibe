@@ -48,14 +48,29 @@ export const categoriasRepo = {
     })
   },
 
-  /** Recusa excluir Categoria em uso: o M3 reatribui as Assinaturas antes. */
-  async excluir(id: string): Promise<void> {
+  /**
+   * Categoria em uso só é excluída com uma Categoria de destino: as Assinaturas
+   * passam para ela e a exclusão acontece na mesma transação.
+   */
+  async excluir(id: string, destinoId?: string): Promise<void> {
     await db.transaction('rw', db.categorias, db.assinaturas, async () => {
-      const emUso = await db.assinaturas.where('categoriaId').equals(id).count()
-      if (emUso > 0) {
-        throw new ErroValidacao([
-          `A Categoria está em uso por ${emUso} Assinatura(s); mova-as para outra Categoria antes de excluir.`,
-        ])
+      const emUso = db.assinaturas.where('categoriaId').equals(id)
+      const quantidade = await emUso.count()
+      if (quantidade > 0) {
+        if (destinoId === undefined) {
+          throw new ErroValidacao([
+            `A Categoria está em uso por ${quantidade} Assinatura(s); mova-as para outra Categoria antes de excluir.`,
+          ])
+        }
+        if (destinoId === id) {
+          throw new ErroValidacao([
+            'Escolha uma Categoria de destino diferente da excluída.',
+          ])
+        }
+        if ((await db.categorias.get(destinoId)) === undefined) {
+          throw new ErroValidacao(['A Categoria de destino não existe.'])
+        }
+        await emUso.modify({ categoriaId: destinoId })
       }
       await db.categorias.delete(id)
     })

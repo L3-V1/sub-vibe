@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { estado, validarAssinatura, vigenciaEm } from './assinatura'
+import {
+  adicionarVigencia,
+  cancelar,
+  desfazerUltimo,
+  estado,
+  validarAssinatura,
+  vigenciaEm,
+} from './assinatura'
 import type { Assinatura, Vigencia } from './tipos'
 
 const mensal = (inicio: string, extras: Partial<Vigencia> = {}): Vigencia => ({
@@ -164,5 +171,64 @@ describe('vigenciaEm', () => {
     expect(vigenciaEm(a, '2026-08-14')).toBe(segunda)
     expect(vigenciaEm(a, '2026-08-15')).toBe(terceira)
     expect(vigenciaEm(a, '2030-01-01')).toBe(terceira)
+  })
+})
+
+describe('cancelar', () => {
+  it('põe a Data de cancelamento só na última Vigência, sem mudar a original', () => {
+    const a = assinatura(
+      mensal('2026-01-10', { fim: '2026-02-01' }),
+      mensal('2026-03-01'),
+    )
+    expect(cancelar(a, '2026-05-10').vigencias).toEqual([
+      mensal('2026-01-10', { fim: '2026-02-01' }),
+      mensal('2026-03-01', { fim: '2026-05-10' }),
+    ])
+    expect(a.vigencias[1].fim).toBeUndefined()
+  })
+})
+
+describe('adicionarVigencia', () => {
+  it('acrescenta a Vigência ao final', () => {
+    const anual = mensal('2026-06-01', {
+      ciclo: { quantidade: 1, unidade: 'ano' },
+    })
+    expect(
+      adicionarVigencia(assinatura(mensal('2026-01-10')), anual).vigencias,
+    ).toEqual([mensal('2026-01-10'), anual])
+  })
+})
+
+describe('desfazerUltimo', () => {
+  it('desfaz o cancelamento removendo a Data de cancelamento', () => {
+    const a = assinatura(
+      mensal('2026-01-10'),
+      mensal('2026-03-01', { fim: '2026-05-10' }),
+    )
+    const desfeita = desfazerUltimo(a)
+    expect(desfeita?.vigencias).toEqual([
+      mensal('2026-01-10'),
+      mensal('2026-03-01'),
+    ])
+    expect(desfeita?.vigencias[1]).not.toHaveProperty('fim')
+  })
+
+  it('desfaz o cancelamento da única Vigência', () => {
+    const a = assinatura(mensal('2026-01-10', { fim: '2026-05-10' }))
+    expect(desfazerUltimo(a)?.vigencias).toEqual([mensal('2026-01-10')])
+  })
+
+  it('remove a última Vigência aberta (ex.: desfaz uma Reativação)', () => {
+    const a = assinatura(
+      mensal('2026-01-10', { fim: '2026-02-01' }),
+      mensal('2026-03-01'),
+    )
+    expect(desfazerUltimo(a)?.vigencias).toEqual([
+      mensal('2026-01-10', { fim: '2026-02-01' }),
+    ])
+  })
+
+  it('não remove a única Vigência', () => {
+    expect(desfazerUltimo(assinatura(mensal('2026-01-10')))).toBeUndefined()
   })
 })

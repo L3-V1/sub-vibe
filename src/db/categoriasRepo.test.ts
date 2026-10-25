@@ -69,23 +69,65 @@ describe('categoriasRepo', () => {
     expect(await db.categorias.get(id)).toBeUndefined()
   })
 
-  it('recusa excluir Categoria em uso', async () => {
-    const id = await categoriasRepo.criar('Jogos')
-    await db.assinaturas.add({
-      id: 'a1',
-      servico: 'Game Pass',
-      categoriaId: id,
-      vigencias: [
-        {
-          inicio: '2026-01-01',
-          valorCentavos: 4990,
-          ciclo: { quantidade: 1, unidade: 'mes' },
-        },
-      ],
+  describe('excluir Categoria em uso', () => {
+    let jogos: string
+    let outros: string
+
+    beforeEach(async () => {
+      jogos = await categoriasRepo.criar('Jogos')
+      outros = (await db.categorias.filter((c) => c.nome === 'Outros').first())!
+        .id
+      for (const id of ['a1', 'a2']) {
+        await db.assinaturas.add({
+          id,
+          servico: 'Game Pass',
+          categoriaId: jogos,
+          vigencias: [
+            {
+              inicio: '2026-01-01',
+              valorCentavos: 4990,
+              ciclo: { quantidade: 1, unidade: 'mes' },
+            },
+          ],
+        })
+      }
     })
-    expect(await erroDe(categoriasRepo.excluir(id))).toEqual([
-      'A Categoria está em uso por 1 Assinatura(s); mova-as para outra Categoria antes de excluir.',
-    ])
-    expect(await db.categorias.get(id)).toBeDefined()
+
+    /** Nada mudou: a Categoria existe e as Assinaturas continuam nela. */
+    async function nadaMudou() {
+      expect(await db.categorias.get(jogos)).toBeDefined()
+      expect(
+        await db.assinaturas.where('categoriaId').equals(jogos).count(),
+      ).toBe(2)
+    }
+
+    it('recusa sem Categoria de destino', async () => {
+      expect(await erroDe(categoriasRepo.excluir(jogos))).toEqual([
+        'A Categoria está em uso por 2 Assinatura(s); mova-as para outra Categoria antes de excluir.',
+      ])
+      await nadaMudou()
+    })
+
+    it('move as Assinaturas para o destino e exclui', async () => {
+      await categoriasRepo.excluir(jogos, outros)
+      expect(await db.categorias.get(jogos)).toBeUndefined()
+      expect(
+        (await db.assinaturas.toArray()).map((a) => a.categoriaId),
+      ).toEqual([outros, outros])
+    })
+
+    it('recusa destino igual à Categoria excluída', async () => {
+      expect(await erroDe(categoriasRepo.excluir(jogos, jogos))).toEqual([
+        'Escolha uma Categoria de destino diferente da excluída.',
+      ])
+      await nadaMudou()
+    })
+
+    it('recusa destino inexistente', async () => {
+      expect(await erroDe(categoriasRepo.excluir(jogos, 'nao-existe'))).toEqual(
+        ['A Categoria de destino não existe.'],
+      )
+      await nadaMudou()
+    })
   })
 })

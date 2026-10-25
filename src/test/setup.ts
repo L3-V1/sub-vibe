@@ -8,3 +8,11 @@ afterEach(() => {
   cleanup()
 })
 
+// O jsdom não implementa `showModal`/`close` do <dialog>: alterna só o atributo `open`.
+HTMLDialogElement.prototype.showModal ??= function (this: HTMLDialogElement) {
+  this.setAttribute('open', '')
+}
+HTMLDialogElement.prototype.close ??= function (this: HTMLDialogElement) {
+  this.removeAttribute('open')
+  this.dispatchEvent(new Event('close'))
+}
