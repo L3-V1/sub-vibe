@@ -9,7 +9,13 @@ import {
 import { ErroValidacao } from '../../db/esquemas'
 import { useAssinaturas, useCategorias } from '../../db/hooks'
 import { Dialogo } from '../../shared/Dialogo'
-import { botaoPrimario, campo, cartao, rotulo } from '../../shared/estilos'
+import {
+  botaoPrimario,
+  campo,
+  cartao,
+  rotulo,
+  tituloPagina,
+} from '../../shared/estilos'
 import { formatarData, hoje } from '../../shared/formatacao'
 import { ListaErros } from '../../shared/ListaErros'
 import { useAvisos } from '../../shared/useAvisos'
@@ -43,8 +49,8 @@ export function BackupPage() {
   return (
     <section className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold">Backup</h1>
-        <p className="mt-2 text-slate-600">
+        <h1 className={tituloPagina}>Backup</h1>
+        <p className="mt-2 text-texto-suave">
           Os dados só existem neste navegador. Exporte um backup de tempos em
           tempos e guarde o arquivo em outro lugar.
         </p>
@@ -52,7 +58,7 @@ export function BackupPage() {
 
       <div className={`${cartao} flex max-w-md flex-col gap-3`}>
         <h2 className="text-lg font-semibold">Exportar</h2>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-texto-suave">
           Baixa um arquivo JSON com Categorias, Assinaturas e preferências.
         </p>
         <button
@@ -70,7 +76,7 @@ export function BackupPage() {
         className={`${cartao} flex max-w-md flex-col gap-3`}
       >
         <h2 className="text-lg font-semibold">Importar</h2>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-texto-suave">
           Substitui todos os dados atuais pelos do arquivo.
         </p>
         <label className={rotulo}>
@@ -127,12 +133,12 @@ function DialogoSubstituir({
         onSubstituido()
       }}
     >
-      <p className="text-sm text-slate-700">
+      <p className="text-sm text-texto-suave">
         Backup exportado em {formatarData(new Date(backup.exportadoEm))}, com{' '}
         {backup.categorias.length} Categoria(s) e {backup.assinaturas.length}{' '}
         Assinatura(s).
       </p>
-      <p className="text-sm text-slate-700">
+      <p className="text-sm text-texto-suave">
         Serão apagadas {categorias?.length ?? '…'} Categoria(s) e{' '}
         {assinaturas?.length ?? '…'} Assinatura(s) atuais. Essa ação não pode
         ser desfeita.

@@ -4,7 +4,7 @@ export function ListaErros({ erros }: { erros: string[] }) {
   return (
     <ul
       role="alert"
-      className="list-disc rounded-md border border-red-200 bg-red-50 py-2 pr-3 pl-7 text-sm text-red-800"
+      className="list-disc rounded-xl border border-perigo/40 bg-perigo-fundo py-2.5 pr-4 pl-8 text-sm text-perigo-texto"
     >
       {erros.map((erro) => (
         <li key={erro}>{erro}</li>

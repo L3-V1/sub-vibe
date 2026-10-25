@@ -1,1 +1,128 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque/opsz.css';
+@import '@fontsource-variable/onest/wght.css';
+
+/* Tema escuro é o padrão; `data-tema="claro"` no <html> troca os tokens. */
+:root {
+  color-scheme: dark;
+  --fundo: #0d1416;
+  --brilho-1: rgb(45 170 160 / 0.16);
+  --brilho-2: rgb(242 193 78 / 0.07);
+  --pontos: rgb(255 255 255 / 0.035);
+  --vidro: rgb(255 255 255 / 0.045);
+  --vidro-forte: rgb(22 32 35 / 0.88);
+  --vidro-hover: rgb(255 255 255 / 0.08);
+  --borda: rgb(255 255 255 / 0.09);
+  --borda-forte: rgb(255 255 255 / 0.18);
+  --campo: rgb(0 0 0 / 0.22);
+  --texto: #e6eded;
+  --texto-suave: #9db0b2;
+  --acento: #f2c14e;
+  --acento-hover: #f6d47f;
+  --sobre-acento: #1a1608;
+  --link: #f5cf6e;
+  --sucesso: #6fe3b4;
+  --sucesso-fundo: rgb(111 227 180 / 0.12);
+  --perigo: #ff8c82;
+  --perigo-hover: #ffaaa2;
+  --sobre-perigo: #2a0d0a;
+  --perigo-texto: #ffaaa2;
+  --perigo-fundo: rgb(255 140 130 / 0.1);
+  --aviso: rgb(20 52 46 / 0.9);
+}
+
+[data-tema='claro'] {
+  color-scheme: light;
+  --fundo: #edf2f1;
+  --brilho-1: rgb(45 170 160 / 0.18);
+  --brilho-2: rgb(242 193 78 / 0.2);
+  --pontos: rgb(16 32 31 / 0.05);
+  --vidro: rgb(255 255 255 / 0.6);
+  --vidro-forte: rgb(250 252 252 / 0.92);
+  --vidro-hover: rgb(255 255 255 / 0.85);
+  --borda: rgb(16 32 31 / 0.1);
+  --borda-forte: rgb(16 32 31 / 0.22);
+  --campo: rgb(255 255 255 / 0.8);
+  --texto: #10201f;
+  --texto-suave: #4a5c5d;
+  --acento: #f2c14e;
+  --acento-hover: #e8b334;
+  --sobre-acento: #1a1608;
+  --link: #7a4f00;
+  --sucesso: #0f6b4a;
+  --sucesso-fundo: rgb(15 107 74 / 0.1);
+  --perigo: #c2362f;
+  --perigo-hover: #a52b25;
+  --sobre-perigo: #ffffff;
+  --perigo-texto: #a52b25;
+  --perigo-fundo: rgb(194 54 47 / 0.08);
+  --aviso: rgb(15 107 74 / 0.92);
+}
+
+@theme inline {
+  --font-sans: 'Onest Variable', system-ui, sans-serif;
+  --font-titulo: 'Bricolage Grotesque Variable', 'Onest Variable', sans-serif;
+
+  --color-fundo: var(--fundo);
+  --color-vidro: var(--vidro);
+  --color-vidro-forte: var(--vidro-forte);
+  --color-vidro-hover: var(--vidro-hover);
+  --color-borda: var(--borda);
+  --color-borda-forte: var(--borda-forte);
+  --color-campo: var(--campo);
+  --color-texto: var(--texto);
+  --color-texto-suave: var(--texto-suave);
+  --color-acento: var(--acento);
+  --color-acento-hover: var(--acento-hover);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-link: var(--link);
+  --color-sucesso: var(--sucesso);
+  --color-sucesso-fundo: var(--sucesso-fundo);
+  --color-perigo: var(--perigo);
+  --color-perigo-hover: var(--perigo-hover);
+  --color-sobre-perigo: var(--sobre-perigo);
+  --color-perigo-texto: var(--perigo-texto);
+  --color-perigo-fundo: var(--perigo-fundo);
+  --color-aviso: var(--aviso);
+}
+
+@layer base {
+  body {
+    min-height: 100vh;
+    background-color: var(--fundo);
+    /* Dois brilhos difusos e uma grade de pontos para o vidro ter o que desfocar. */
+    background-image:
+      radial-gradient(42rem 30rem at 8% -8%, var(--brilho-1), transparent 70%),
+      radial-gradient(
+        36rem 28rem at 100% 105%,
+        var(--brilho-2),
+        transparent 70%
+      ),
+      radial-gradient(var(--pontos) 1px, transparent 1px);
+    background-size:
+      auto,
+      auto,
+      22px 22px;
+    background-attachment: fixed;
+    color: var(--texto);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-titulo);
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background-color: var(--acento);
+    color: var(--sobre-acento);
+  }
+
+  /* Opções de <select> herdam o fundo do tema em vez do branco do sistema. */
+  option {
+    background-color: var(--fundo);
+    color: var(--texto);
+  }
+}

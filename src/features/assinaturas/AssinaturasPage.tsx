@@ -5,7 +5,16 @@ import { estado } from '../../domain/assinatura'
 import { proximoVencimento } from '../../domain/cobrancas'
 import { custoMensalEquivalente } from '../../domain/custos'
 import { EstadoVazio } from '../../shared/EstadoVazio'
-import { botaoPrimario, campo, cartaoVazio, rotulo } from '../../shared/estilos'
+import {
+  botaoPrimario,
+  cabecalhoTabela,
+  campo,
+  cartaoVazio,
+  link,
+  rotulo,
+  tituloPagina,
+  vidro,
+} from '../../shared/estilos'
 import { formatarDataISO, formatarMoeda, hoje } from '../../shared/formatacao'
 import { EtiquetaEstado } from './EtiquetaEstado'
 
@@ -22,8 +31,8 @@ export function AssinaturasPage() {
   const cabecalho = (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-semibold">Assinaturas</h1>
-        <p className="mt-2 text-slate-600">Suas Assinaturas recorrentes.</p>
+        <h1 className={tituloPagina}>Assinaturas</h1>
+        <p className="mt-2 text-texto-suave">Suas Assinaturas recorrentes.</p>
       </div>
       <Link to="/assinaturas/nova" className={botaoPrimario}>
         Nova Assinatura
@@ -35,7 +44,7 @@ export function AssinaturasPage() {
     return (
       <section className="flex flex-col gap-6">
         {cabecalho}
-        <p className="text-slate-600">Carregando…</p>
+        <p className="text-texto-suave">Carregando…</p>
       </section>
     )
   }
@@ -108,9 +117,9 @@ export function AssinaturasPage() {
           </EstadoVazio>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <div className={`overflow-x-auto ${vidro}`}>
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 text-slate-700">
+            <thead className={cabecalhoTabela}>
               <tr>
                 <th className="px-4 py-3 font-medium">Serviço</th>
                 <th className="px-4 py-3 font-medium">Categoria</th>
@@ -121,16 +130,13 @@ export function AssinaturasPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-borda">
               {linhas.map(({ assinatura: a, estado }) => {
                 const vencimento = proximoVencimento(a, dia)
                 return (
                   <tr key={a.id}>
                     <td className="px-4 py-3">
-                      <Link
-                        to={`/assinaturas/${a.id}`}
-                        className="font-medium text-indigo-700 underline"
-                      >
+                      <Link to={`/assinaturas/${a.id}`} className={link}>
                         {a.servico}
                       </Link>
                     </td>

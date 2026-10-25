@@ -10,6 +10,7 @@ import {
   campo,
   cartao,
   rotulo,
+  tituloPagina,
 } from '../../shared/estilos'
 import { hoje } from '../../shared/formatacao'
 import { ListaErros } from '../../shared/ListaErros'
@@ -56,9 +57,9 @@ export function NovaAssinaturaPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Nova Assinatura</h1>
+      <h1 className={tituloPagina}>Nova Assinatura</h1>
       {categorias === undefined ? (
-        <p className="text-slate-600">Carregando…</p>
+        <p className="text-texto-suave">Carregando…</p>
       ) : (
         <form
           noValidate
@@ -67,9 +68,10 @@ export function NovaAssinaturaPage() {
         >
           <CamposBasicos categorias={categorias} />
           <CamposVigencia padrao={{ inicio: hoje() }} />
-          <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+          <label className="flex items-center gap-2 text-sm font-medium text-texto-suave">
             <input
               type="checkbox"
+              className="size-4 accent-acento"
               checked={gratuito}
               onChange={(e) => setGratuito(e.target.checked)}
             />
