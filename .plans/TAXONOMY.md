@@ -1,0 +1,27 @@
+# Taxonomia dos planos
+
+Mantido pela skill plan-triage. Pode ser editado à mão: a skill lê este arquivo antes de cada triagem e respeita o que estiver aqui.
+
+## Termos
+
+| Termo no plano | Pasta | Prefixo |
+|---|---|---|
+| roadmap | roadmaps | roadmap |
+| marco | milestones | milestone |
+
+## Hierarquias
+
+- `roadmaps/roadmap-01`, Implementação do Sub-vibe: roadmap > milestone
+
+## Categorias de avulsos
+
+features, fixes, refactors, spikes, docs, chores
+
+## Índice
+
+- **roadmaps/**
+  - **roadmap-01/**
+    - [Roadmap de implementação do Sub-vibe](roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md)
+    - **milestones/**
+      - **milestone-00/**
+        - [M0 · Fundação do projeto (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-00/milestone-00-fundacao-do-projeto.md)

@@ -1,0 +1,6 @@
+dist
+coverage
+.plans
+docs
+*.md
+package-lock.json
