@@ -1,0 +1,2 @@
+# LF em todos os textos, para o checkout no Windows não brigar com o Prettier.
+* text=auto eol=lf
