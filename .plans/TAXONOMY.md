@@ -35,3 +35,5 @@ features, fixes, refactors, spikes, docs, chores
         - [M4 · Painel (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-04/milestone-04-painel.md)
       - **milestone-05/**
         - [M5 · Backup (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-05/milestone-05-backup.md)
+      - **milestone-06/**
+        - [M6 · Polimento e distribuição (Sub-vibe)](roadmaps/roadmap-01/milestones/milestone-06/milestone-06-polimento-e-deploy-github-pages.md)
