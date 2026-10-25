@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado atual
 
-M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. M1 (núcleo de domínio) concluído: `src/domain/` com tipos (`tipos.ts`, datas como `DataISO` `'AAAA-MM-DD'`), invariantes e estado (`assinatura.ts`), Cobranças e Próximo vencimento (`cobrancas.ts`), custos e gastos (`custos.ts`), com 100% de cobertura (`npm run test:coverage`). `src/db/` ainda vazio (M2). Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
+M0 (fundação) concluído: esqueleto Vite + React 19 + TypeScript, Tailwind CSS v4, React Router (`createBrowserRouter`), oxlint + Prettier, Vitest + Testing Library, layout com navegação e telas placeholder. M1 (núcleo de domínio) concluído: `src/domain/` com tipos (`tipos.ts`, datas como `DataISO` `'AAAA-MM-DD'`), invariantes e estado (`assinatura.ts`), Cobranças e Próximo vencimento (`cobrancas.ts`), custos e gastos (`custos.ts`), com 100% de cobertura (`npm run test:coverage`). M2 (persistência local) concluído: `src/db/` com Dexie (`db.ts`, schema v1, Categorias iniciais no `populate`), schemas Zod e `ErroValidacao` (`esquemas.ts`), repositórios (`categoriasRepo`, `assinaturasRepo`, `preferenciasRepo`) e hooks `useLiveQuery` (`hooks.ts`); `main.tsx` chama `navigator.storage.persist()`. Antes de implementar, leia o marco correspondente (M1 a M6) em `.plans/roadmaps/roadmap-01/roadmap-01-implementacao-sub-vibe.md`; cada marco tem um critério "Pronto quando".
 
 ## O que é
 
 App pessoal, só frontend, para registrar Assinaturas recorrentes (streaming, cursos, I.A.) e acompanhar gastos e vencimentos. Nenhum pagamento passa pelo app. Interface e mensagens em pt-BR; valores sempre em reais.
 
-Stack: React + Vite + TypeScript, Tailwind CSS v4, React Router, Vitest + Testing Library. Dexie (IndexedDB), date-fns e Zod entram em M1/M2, quando forem usados.
+Stack: React + Vite + TypeScript, Tailwind CSS v4, React Router, Vitest + Testing Library. Dexie (IndexedDB) + `dexie-react-hooks`, date-fns e Zod v4.
 
 ## Comandos
 
@@ -20,7 +20,7 @@ Stack: React + Vite + TypeScript, Tailwind CSS v4, React Router, Vitest + Testin
 - `npm run lint` (oxlint), `npm run format` e `npm run format:check` (Prettier, com `prettier-plugin-tailwindcss`; `.md` fica de fora)
 - Um teste só: `npx vitest run src/shared/formatacao.test.ts` (ou `-t "<nome do teste>"`)
 - Testes sem globals: importe `describe/it/expect` de `vitest`. O setup (`src/test/setup.ts`) carrega o jest-dom e faz o `cleanup` após cada teste.
-- Testes de persistência (M2) usarão `fake-indexeddb`.
+- Testes de persistência usam `fake-indexeddb` (carregado no setup); zere o banco no `beforeEach` com `await db.delete(); await db.open()`, o que refaz o `populate`.
 
 ## Arquitetura
 
