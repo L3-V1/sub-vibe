@@ -52,7 +52,7 @@ export function DialogoVigencia({ assinatura, onFechar }: Props) {
         )
       }
     >
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-texto-suave">
         A contagem das Cobranças recomeça no início da nova Vigência, que pode
         ser uma data futura.
       </p>
@@ -78,7 +78,7 @@ export function DialogoCancelar({ assinatura, onFechar }: Props) {
         await gravar(cancelar(assinatura, data), 'Cancelamento registrado.')
       }}
     >
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-texto-suave">
         Depois da Data de cancelamento não há mais Cobranças. Uma data futura
         mantém a Assinatura Ativa até lá.
       </p>

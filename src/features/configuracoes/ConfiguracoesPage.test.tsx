@@ -54,4 +54,18 @@ describe('ConfiguracoesPage', () => {
     await router.navigate('/')
     expect(await screen.findByText('Próximos 30 dias')).toBeInTheDocument()
   })
+
+  it('troca o tema e lembra a escolha neste navegador', async () => {
+    localStorage.clear()
+    renderizar('/configuracoes')
+    expect(await screen.findByRole('radio', { name: 'Escuro' })).toBeChecked()
+
+    await userEvent.click(screen.getByRole('radio', { name: 'Claro' }))
+
+    expect(document.documentElement.dataset.tema).toBe('claro')
+    expect(localStorage.getItem('sub-vibe:tema')).toBe('claro')
+    expect(await screen.findByText('Tema claro aplicado.')).toBeInTheDocument()
+    delete document.documentElement.dataset.tema
+    localStorage.clear()
+  })
 })

@@ -12,6 +12,8 @@ import {
   cartao,
   cartaoVazio,
   rotulo,
+  tituloPagina,
+  vidro,
 } from '../../shared/estilos'
 import { ListaErros } from '../../shared/ListaErros'
 import { useAvisos } from '../../shared/useAvisos'
@@ -37,8 +39,8 @@ export function CategoriasPage() {
   return (
     <section className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold">Categorias</h1>
-        <p className="mt-2 text-slate-600">
+        <h1 className={tituloPagina}>Categorias</h1>
+        <p className="mt-2 text-texto-suave">
           Organize suas Assinaturas por Categoria.
         </p>
       </div>
@@ -63,7 +65,7 @@ export function CategoriasPage() {
       </form>
 
       {categorias === undefined || assinaturas === undefined ? (
-        <p className="text-slate-600">Carregando…</p>
+        <p className="text-texto-suave">Carregando…</p>
       ) : categorias.length === 0 ? (
         <div className={cartaoVazio}>
           <EstadoVazio icone="categorias">
@@ -71,7 +73,7 @@ export function CategoriasPage() {
           </EstadoVazio>
         </div>
       ) : (
-        <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+        <ul className={`divide-y divide-borda ${vidro}`}>
           {categorias.map((c) => (
             <li key={c.id} className="px-4 py-3">
               {renomeando === c.id ? (
@@ -83,7 +85,7 @@ export function CategoriasPage() {
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span>
                     <span className="font-medium">{c.nome}</span>{' '}
-                    <span className="text-sm text-slate-600">
+                    <span className="text-sm text-texto-suave">
                       {emUso(c.id)} Assinatura(s)
                     </span>
                   </span>
@@ -94,7 +96,7 @@ export function CategoriasPage() {
                       aria-label={`Renomear ${c.nome}`}
                       onClick={() => setRenomeando(c.id)}
                     >
-                      Renomear
+                      <span aria-hidden="true">✏️</span> Renomear
                     </button>
                     <button
                       type="button"
@@ -102,7 +104,7 @@ export function CategoriasPage() {
                       aria-label={`Excluir ${c.nome}`}
                       onClick={() => setExcluindo(c)}
                     >
-                      Excluir
+                      <span aria-hidden="true">🗑️</span> Excluir
                     </button>
                   </span>
                 </div>

@@ -25,9 +25,10 @@ export function AvisosProvider({ children }: { children: ReactNode }) {
         {avisos.map((a) => (
           <p
             key={a.id}
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white shadow-lg"
+            className="flex items-center gap-2 rounded-full border border-sucesso/30 bg-aviso px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-black/30 backdrop-blur-xl"
           >
-            {a.texto}
+            <span aria-hidden="true">✅</span>
+            <span>{a.texto}</span>
           </p>
         ))}
       </div>

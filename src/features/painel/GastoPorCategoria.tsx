@@ -1,7 +1,7 @@
 import { gastoPorCategoria } from '../../domain/custos'
 import type { Assinatura, Categoria, DataISO } from '../../domain/tipos'
 import { EstadoVazio } from '../../shared/EstadoVazio'
-import { cartao } from '../../shared/estilos'
+import { cabecalhoTabela, cartao } from '../../shared/estilos'
 import { formatarMoeda } from '../../shared/formatacao'
 
 const porcentagem = new Intl.NumberFormat('pt-BR', {
@@ -43,9 +43,9 @@ export function GastoPorCategoria({
                 className="grid grid-cols-[6rem_1fr_auto] items-center gap-3 text-sm sm:grid-cols-[8rem_1fr_7rem]"
               >
                 <span className="truncate">{l.nome}</span>
-                <span className="h-4 rounded bg-slate-100">
+                <span className="h-2.5 rounded-full bg-vidro-hover">
                   <span
-                    className="block h-full rounded bg-indigo-600"
+                    className="block h-full rounded-full bg-linear-to-r from-sucesso to-acento"
                     style={{ width: `${(l.valor / linhas[0].valor) * 100}%` }}
                   />
                 </span>
@@ -58,7 +58,7 @@ export function GastoPorCategoria({
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-700">
+              <thead className={cabecalhoTabela}>
                 <tr>
                   <th className="px-4 py-3 font-medium">Categoria</th>
                   <th className="px-4 py-3 text-right font-medium">Valor</th>
@@ -67,7 +67,7 @@ export function GastoPorCategoria({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-borda">
                 {linhas.map((l) => (
                   <tr key={l.id}>
                     <td className="px-4 py-3">{l.nome}</td>
@@ -80,7 +80,7 @@ export function GastoPorCategoria({
                   </tr>
                 ))}
               </tbody>
-              <tfoot className="border-t border-slate-200 font-medium">
+              <tfoot className="border-t border-borda font-medium">
                 <tr>
                   <td className="px-4 py-3">Total</td>
                   <td className="px-4 py-3 text-right tabular-nums">

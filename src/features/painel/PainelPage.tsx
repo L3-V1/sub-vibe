@@ -15,15 +15,18 @@ import {
   campo,
   cartao,
   cartaoVazio,
+  link,
+  numeroGrande,
   rotulo,
+  tituloPagina,
 } from '../../shared/estilos'
 import { formatarDataISO, formatarMoeda, hoje } from '../../shared/formatacao'
 import { GastoPorCategoria } from './GastoPorCategoria'
 
 const cabecalho = (
   <div>
-    <h1 className="text-2xl font-semibold">Painel</h1>
-    <p className="mt-2 text-slate-600">
+    <h1 className={tituloPagina}>Painel</h1>
+    <p className="mt-2 text-texto-suave">
       Resumo de gastos e próximos vencimentos.
     </p>
   </div>
@@ -43,7 +46,7 @@ export function PainelPage() {
     return (
       <section className="flex flex-col gap-6">
         {cabecalho}
-        <p className="text-slate-600">Carregando…</p>
+        <p className="text-texto-suave">Carregando…</p>
       </section>
     )
   }
@@ -77,12 +80,17 @@ export function PainelPage() {
       {cabecalho}
 
       <div className="grid gap-6 md:grid-cols-2">
-        <section aria-label="Total mensal equivalente" className={cartao}>
+        <section
+          aria-label="Total mensal equivalente"
+          className={`${cartao} relative overflow-hidden`}
+        >
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-20 -right-12 -z-10 size-56 rounded-full bg-acento/20 blur-3xl"
+          />
           <h2 className="text-lg font-semibold">Total mensal equivalente</h2>
-          <p className="mt-2 text-3xl font-semibold tabular-nums">
-            {formatarMoeda(totalMensal)}
-          </p>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className={`mt-2 ${numeroGrande}`}>{formatarMoeda(totalMensal)}</p>
+          <p className="mt-1 text-sm text-texto-suave">
             {ativas} Assinatura(s) Ativa(s)
           </p>
         </section>
@@ -98,10 +106,10 @@ export function PainelPage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold">Gasto acumulado</h2>
-            <p className="mt-2 text-3xl font-semibold tabular-nums">
+            <p className={`mt-2 ${numeroGrande}`}>
               {formatarMoeda(gastoAcumulado(assinaturas, de, ate))}
             </p>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-texto-suave">
               De {formatarDataISO(de)} a {formatarDataISO(ate)}
             </p>
           </div>
@@ -152,13 +160,13 @@ function ProximosVencimentos({
   return (
     <section aria-label="Próximos vencimentos" className={cartao}>
       <h2 className="text-lg font-semibold">Próximos vencimentos</h2>
-      <p className="mb-3 text-sm text-slate-600">{janela}</p>
+      <p className="mb-3 text-sm text-texto-suave">{janela}</p>
       {cobrancas.length === 0 ? (
         <EstadoVazio icone="calendario">
           <p className="text-sm">{vazio}</p>
         </EstadoVazio>
       ) : (
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-y divide-borda">
           {cobrancas.map((c) => (
             <li
               key={`${c.assinaturaId}-${c.data}`}
@@ -167,7 +175,7 @@ function ProximosVencimentos({
               <span className="tabular-nums">{formatarDataISO(c.data)}</span>
               <Link
                 to={`/assinaturas/${c.assinaturaId}`}
-                className="flex-1 font-medium text-indigo-700 underline"
+                className={`flex-1 ${link}`}
               >
                 {servico.get(c.assinaturaId)}
               </Link>

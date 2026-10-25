@@ -6,7 +6,14 @@ import { desfazerUltimo, estado, vigenciaEm } from '../../domain/assinatura'
 import { cobrancasNoIntervalo } from '../../domain/cobrancas'
 import type { Assinatura, DataISO } from '../../domain/tipos'
 import { EstadoVazio } from '../../shared/EstadoVazio'
-import { botaoPequeno, cartao } from '../../shared/estilos'
+import {
+  botaoPequeno,
+  cartao,
+  link,
+  marcador,
+  marcadorNeutro,
+  tituloPagina,
+} from '../../shared/estilos'
 import {
   formatarCiclo,
   formatarDataISO,
@@ -25,7 +32,7 @@ import { EtiquetaEstado } from './EtiquetaEstado'
 type Acao = 'vigencia' | 'cancelar' | 'editar' | 'desfazer' | 'excluir'
 
 const linkVoltar = (
-  <Link to="/assinaturas" className="text-sm text-indigo-700 underline">
+  <Link to="/assinaturas" className={`text-sm ${link}`}>
     Voltar às Assinaturas
   </Link>
 )
@@ -37,13 +44,13 @@ export function AssinaturaPage() {
   const [acao, setAcao] = useState<Acao | null>(null)
 
   if (assinatura === undefined || categorias === undefined) {
-    return <p className="text-slate-600">Carregando…</p>
+    return <p className="text-texto-suave">Carregando…</p>
   }
   if (assinatura === null) {
     return (
       <section className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold">Assinatura não encontrada</h1>
-        <p className="text-slate-600">
+        <h1 className={tituloPagina}>Assinatura não encontrada</h1>
+        <p className="text-texto-suave">
           Ela pode ter sido excluída. {linkVoltar}
         </p>
       </section>
@@ -68,15 +75,15 @@ export function AssinaturaPage() {
       <div className="flex flex-col gap-2">
         {linkVoltar}
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl font-semibold">{assinatura.servico}</h1>
+          <h1 className={tituloPagina}>{assinatura.servico}</h1>
           <EtiquetaEstado estado={estado(assinatura, dia)} />
         </div>
-        <p className="text-slate-600">
+        <p className="text-texto-suave">
           Categoria:{' '}
           {categorias.find((c) => c.id === assinatura.categoriaId)?.nome}
         </p>
         {assinatura.observacoes !== undefined && (
-          <p className="whitespace-pre-line text-slate-600">
+          <p className="whitespace-pre-line text-texto-suave">
             {assinatura.observacoes}
           </p>
         )}
@@ -146,7 +153,7 @@ function ProximasCobrancas({
           </p>
         </EstadoVazio>
       ) : (
-        <ul className="divide-y divide-slate-100">
+        <ul className="divide-y divide-borda">
           {cobrancas.map((c) => (
             <li key={c.data} className="flex justify-between py-2 text-sm">
               <span>{formatarDataISO(c.data)}</span>
@@ -161,10 +168,6 @@ function ProximasCobrancas({
   )
 }
 
-const marcador =
-  'rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap'
-const marcadorNeutro = `${marcador} bg-slate-100 text-slate-700`
-
 function LinhaDoTempo({
   assinatura,
   dia,
@@ -177,7 +180,7 @@ function LinhaDoTempo({
   return (
     <section aria-label="Linha do tempo" className={cartao}>
       <h2 className="mb-3 text-lg font-semibold">Linha do tempo</h2>
-      <ol className="flex flex-col gap-3 border-l-2 border-indigo-200 pl-4">
+      <ol className="flex flex-col gap-3 border-l-2 border-borda-forte pl-4">
         {assinatura.vigencias.map((v) => (
           <li key={v.inicio} className="text-sm">
             <p className="flex flex-wrap items-center gap-2">
@@ -188,17 +191,17 @@ function LinhaDoTempo({
                 <span className={marcadorNeutro}>Período gratuito</span>
               )}
               {v === vigente && (
-                <span className={`${marcador} bg-indigo-100 text-indigo-800`}>
+                <span className={`${marcador} bg-acento/15 text-link`}>
                   Vigente
                 </span>
               )}
               {v.inicio > dia && <span className={marcadorNeutro}>Futura</span>}
             </p>
-            <p className="text-slate-600">
+            <p className="text-texto-suave">
               {formatarMoeda(v.valorCentavos)}, {formatarCiclo(v.ciclo)}
             </p>
             {v.fim !== undefined && (
-              <p className="text-slate-600">
+              <p className="text-texto-suave">
                 Data de cancelamento: {formatarDataISO(v.fim)}
               </p>
             )}

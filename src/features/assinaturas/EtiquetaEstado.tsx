@@ -1,12 +1,13 @@
 import type { EstadoAssinatura } from '../../domain/tipos'
+import { marcador } from '../../shared/estilos'
 
 export function EtiquetaEstado({ estado }: { estado: EstadoAssinatura }) {
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap ${
+      className={`${marcador} ${
         estado === 'Ativa'
-          ? 'bg-emerald-100 text-emerald-800'
-          : 'bg-slate-200 text-slate-700'
+          ? 'bg-sucesso-fundo text-sucesso'
+          : 'bg-vidro-hover text-texto-suave'
       }`}
     >
       {estado}
