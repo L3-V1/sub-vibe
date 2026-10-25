@@ -10,13 +10,14 @@ function renderizar(caminho = '/') {
 }
 
 describe('Layout', () => {
-  it('mostra os quatro links de navegação', () => {
+  it('mostra os cinco links de navegação', () => {
     renderizar()
     const nav = screen.getByRole('navigation', { name: 'Principal' })
     for (const rotulo of [
       'Painel',
       'Assinaturas',
       'Categorias',
+      'Backup',
       'Configurações',
     ]) {
       expect(

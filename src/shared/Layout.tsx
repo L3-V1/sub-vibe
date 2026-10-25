@@ -5,6 +5,7 @@ const links = [
   { to: '/', rotulo: 'Painel' },
   { to: '/assinaturas', rotulo: 'Assinaturas' },
   { to: '/categorias', rotulo: 'Categorias' },
+  { to: '/backup', rotulo: 'Backup' },
   { to: '/configuracoes', rotulo: 'Configurações' },
 ]
 
