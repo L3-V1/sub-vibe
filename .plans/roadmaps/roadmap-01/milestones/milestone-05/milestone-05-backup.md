@@ -1,7 +1,7 @@
 ---
 titulo: M5 · Backup (Sub-vibe)
 data: 2026-10-25
-status: aprovado
+status: implementado
 tipo: milestone
 numero: "05"
 pai: roadmaps/roadmap-01

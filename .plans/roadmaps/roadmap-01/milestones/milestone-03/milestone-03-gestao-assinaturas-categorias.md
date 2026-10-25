@@ -1,7 +1,7 @@
 ---
 titulo: M3 · Gestão de Assinaturas e Categorias (Sub-vibe)
 data: 2026-10-25
-status: aprovado
+status: implementado
 tipo: milestone
 numero: "03"
 pai: roadmaps/roadmap-01

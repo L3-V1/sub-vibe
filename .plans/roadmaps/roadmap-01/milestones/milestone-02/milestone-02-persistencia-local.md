@@ -1,7 +1,7 @@
 ---
 titulo: M2 · Persistência local (Sub-vibe)
 data: 2026-10-25
-status: aprovado
+status: implementado
 tipo: milestone
 numero: "02"
 pai: roadmaps/roadmap-01

@@ -1,7 +1,7 @@
 ---
 titulo: M6 · Polimento e distribuição (Sub-vibe)
 data: 2026-10-25
-status: aprovado
+status: implementado
 tipo: milestone
 numero: "06"
 pai: roadmaps/roadmap-01

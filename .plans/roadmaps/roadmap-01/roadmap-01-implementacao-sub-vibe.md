@@ -1,7 +1,7 @@
 ---
 titulo: Roadmap de implementação do Sub-vibe
 data: 2026-10-25
-status: aprovado
+status: implementado
 tipo: roadmap
 numero: "01"
 triagem: ok
