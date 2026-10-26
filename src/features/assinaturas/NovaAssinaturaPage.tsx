@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { assinaturasRepo } from '../../db/assinaturasRepo'
@@ -57,14 +58,16 @@ export function NovaAssinaturaPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className={tituloPagina}>Nova Assinatura</h1>
+      <h1 className={tituloPagina}>
+        Nova Assinatura <span aria-hidden="true">✨</span>
+      </h1>
       {categorias === undefined ? (
         <p className="text-texto-suave">Carregando…</p>
       ) : (
         <form
           noValidate
           onSubmit={enviar}
-          className={`${cartao} flex max-w-2xl flex-col gap-4`}
+          className={`${cartao} flex flex-col gap-4`}
         >
           <CamposBasicos categorias={categorias} />
           <CamposVigencia padrao={{ inicio: hoje() }} />
@@ -78,7 +81,7 @@ export function NovaAssinaturaPage() {
             Começa com Período gratuito
           </label>
           {gratuito && (
-            <label className={rotulo}>
+            <label className={`${rotulo} max-w-xs`}>
               Primeira Cobrança em
               <input type="date" name="primeiraCobranca" className={campo} />
             </label>
@@ -86,6 +89,7 @@ export function NovaAssinaturaPage() {
           <ListaErros erros={erros} />
           <div className="flex gap-2">
             <button type="submit" className={botaoPrimario}>
+              <Check className="size-4" />
               Cadastrar
             </button>
             <Link to="/assinaturas" className={botaoSecundario}>

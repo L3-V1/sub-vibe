@@ -1,3 +1,4 @@
+import { Moon, Save, Sun, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 import { usePreferencias } from '../../db/hooks'
 import { preferenciasRepo } from '../../db/preferenciasRepo'
@@ -26,7 +27,9 @@ export function ConfiguracoesPage() {
   return (
     <section className="flex flex-col gap-6">
       <div>
-        <h1 className={tituloPagina}>Configurações</h1>
+        <h1 className={tituloPagina}>
+          Configurações <span aria-hidden="true">⚙️</span>
+        </h1>
         <p className="mt-2 text-texto-suave">Preferências do app.</p>
       </div>
 
@@ -36,9 +39,9 @@ export function ConfiguracoesPage() {
         <form
           noValidate
           onSubmit={enviar}
-          className={`${cartao} flex max-w-md flex-col gap-3`}
+          className={`${cartao} flex flex-col gap-3`}
         >
-          <label className={rotulo}>
+          <label className={`${rotulo} max-w-xs`}>
             Janela de vencimentos (dias)
             <input
               name="janelaVencimentosDias"
@@ -54,6 +57,7 @@ export function ConfiguracoesPage() {
           </p>
           <ListaErros erros={erros} />
           <button type="submit" className={`${botaoPrimario} self-start`}>
+            <Save className="size-4" />
             Salvar
           </button>
         </form>
@@ -64,9 +68,9 @@ export function ConfiguracoesPage() {
   )
 }
 
-const temas: { valor: Tema; rotulo: string; emoji: string }[] = [
-  { valor: 'escuro', rotulo: 'Escuro', emoji: '🌙' },
-  { valor: 'claro', rotulo: 'Claro', emoji: '☀️' },
+const temas: { valor: Tema; rotulo: string; Icone: LucideIcon }[] = [
+  { valor: 'escuro', rotulo: 'Escuro', Icone: Moon },
+  { valor: 'claro', rotulo: 'Claro', Icone: Sun },
 ]
 
 /** Tema deste navegador; vale na hora, sem botão de salvar. */
@@ -81,7 +85,7 @@ function Aparencia() {
   }
 
   return (
-    <fieldset className={`${cartao} flex max-w-md flex-col gap-3`}>
+    <fieldset className={`${cartao} flex flex-col gap-3`}>
       <legend className="float-left text-lg font-semibold">Aparência</legend>
       <div className="flex gap-2">
         {temas.map((t) => (
@@ -101,7 +105,7 @@ function Aparencia() {
               onChange={() => escolher(t.valor)}
               className="sr-only"
             />
-            <span aria-hidden="true">{t.emoji}</span>
+            <t.Icone className="size-4" />
             {t.rotulo}
           </label>
         ))}

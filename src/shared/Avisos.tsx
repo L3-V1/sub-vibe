@@ -1,3 +1,4 @@
+import { CircleCheck } from 'lucide-react'
 import { useCallback, useState, type ReactNode } from 'react'
 import { ContextoAvisos } from './useAvisos'
 
@@ -27,7 +28,7 @@ export function AvisosProvider({ children }: { children: ReactNode }) {
             key={a.id}
             className="flex items-center gap-2 rounded-full border border-sucesso/30 bg-aviso px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-black/30 backdrop-blur-xl"
           >
-            <span aria-hidden="true">✅</span>
+            <CircleCheck className="size-4 shrink-0 text-sucesso" />
             <span>{a.texto}</span>
           </p>
         ))}

@@ -1,3 +1,4 @@
+import { Download, Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
 import {
   gerarBackup,
@@ -49,14 +50,16 @@ export function BackupPage() {
   return (
     <section className="flex flex-col gap-6">
       <div>
-        <h1 className={tituloPagina}>Backup</h1>
+        <h1 className={tituloPagina}>
+          Backup <span aria-hidden="true">💾</span>
+        </h1>
         <p className="mt-2 text-texto-suave">
           Os dados só existem neste navegador. Exporte um backup de tempos em
           tempos e guarde o arquivo em outro lugar.
         </p>
       </div>
 
-      <div className={`${cartao} flex max-w-md flex-col gap-3`}>
+      <div className={`${cartao} flex flex-col gap-3`}>
         <h2 className="text-lg font-semibold">Exportar</h2>
         <p className="text-sm text-texto-suave">
           Baixa um arquivo JSON com Categorias, Assinaturas e preferências.
@@ -66,6 +69,7 @@ export function BackupPage() {
           onClick={exportar}
           className={`${botaoPrimario} self-start`}
         >
+          <Download className="size-4" />
           Exportar backup
         </button>
       </div>
@@ -73,13 +77,13 @@ export function BackupPage() {
       <form
         noValidate
         onSubmit={enviar}
-        className={`${cartao} flex max-w-md flex-col gap-3`}
+        className={`${cartao} flex flex-col gap-3`}
       >
         <h2 className="text-lg font-semibold">Importar</h2>
         <p className="text-sm text-texto-suave">
           Substitui todos os dados atuais pelos do arquivo.
         </p>
-        <label className={rotulo}>
+        <label className={`${rotulo} max-w-md`}>
           Arquivo de backup
           <input
             ref={arquivoRef}
@@ -91,6 +95,7 @@ export function BackupPage() {
         </label>
         <ListaErros erros={erros} />
         <button type="submit" className={`${botaoPrimario} self-start`}>
+          <Upload className="size-4" />
           Importar…
         </button>
       </form>
@@ -126,6 +131,7 @@ function DialogoSubstituir({
     <Dialogo
       titulo="Substituir todos os dados?"
       rotuloConfirmar="Substituir tudo"
+      icone={Upload}
       perigo
       onFechar={onFechar}
       onConfirmar={async () => {

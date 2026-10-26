@@ -1,4 +1,16 @@
 import { addMonths, format, parseISO } from 'date-fns'
+import {
+  Ban,
+  CalendarClock,
+  CalendarPlus,
+  Clock,
+  Gift,
+  Pencil,
+  RotateCcw,
+  Trash2,
+  Undo2,
+  type LucideIcon,
+} from 'lucide-react'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { useAssinatura, useCategorias } from '../../db/hooks'
@@ -49,7 +61,9 @@ export function AssinaturaPage() {
   if (assinatura === null) {
     return (
       <section className="flex flex-col gap-2">
-        <h1 className={tituloPagina}>Assinatura não encontrada</h1>
+        <h1 className={tituloPagina}>
+          Assinatura não encontrada <span aria-hidden="true">🔍</span>
+        </h1>
         <p className="text-texto-suave">
           Ela pode ter sido excluída. {linkVoltar}
         </p>
@@ -60,12 +74,13 @@ export function AssinaturaPage() {
   const dia = hoje()
   const aberta = assinatura.vigencias.at(-1)?.fim === undefined
   const fechar = () => setAcao(null)
-  const botao = (rotulo: string, para: Acao) => (
+  const botao = (rotulo: string, para: Acao, Icone: LucideIcon) => (
     <button
       type="button"
       className={botaoPequeno}
       onClick={() => setAcao(para)}
     >
+      <Icone className="size-3.5" />
       {rotulo}
     </button>
   )
@@ -92,16 +107,16 @@ export function AssinaturaPage() {
       <div className="flex flex-wrap gap-2">
         {aberta ? (
           <>
-            {botao('Nova Vigência', 'vigencia')}
-            {botao('Cancelar', 'cancelar')}
+            {botao('Nova Vigência', 'vigencia', CalendarPlus)}
+            {botao('Cancelar', 'cancelar', Ban)}
           </>
         ) : (
-          botao('Reativar', 'vigencia')
+          botao('Reativar', 'vigencia', RotateCcw)
         )}
-        {botao('Editar', 'editar')}
+        {botao('Editar', 'editar', Pencil)}
         {desfazerUltimo(assinatura) !== undefined &&
-          botao('Desfazer último registro', 'desfazer')}
-        {botao('Excluir', 'excluir')}
+          botao('Desfazer último registro', 'desfazer', Undo2)}
+        {botao('Excluir', 'excluir', Trash2)}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -188,14 +203,23 @@ function LinhaDoTempo({
                 A partir de {formatarDataISO(v.inicio)}
               </span>
               {v.valorCentavos === 0 && (
-                <span className={marcadorNeutro}>Período gratuito</span>
+                <span className={marcadorNeutro}>
+                  <Gift className="size-3.5" />
+                  Período gratuito
+                </span>
               )}
               {v === vigente && (
                 <span className={`${marcador} bg-acento/15 text-link`}>
+                  <Clock className="size-3.5" />
                   Vigente
                 </span>
               )}
-              {v.inicio > dia && <span className={marcadorNeutro}>Futura</span>}
+              {v.inicio > dia && (
+                <span className={marcadorNeutro}>
+                  <CalendarClock className="size-3.5" />
+                  Futura
+                </span>
+              )}
             </p>
             <p className="text-texto-suave">
               {formatarMoeda(v.valorCentavos)}, {formatarCiclo(v.ciclo)}

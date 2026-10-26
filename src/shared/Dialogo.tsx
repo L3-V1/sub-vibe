@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react'
 import { useEffect, useId, useRef, type ReactNode } from 'react'
 import {
   botaoPerigo,
@@ -12,6 +13,8 @@ import { useEnvio } from './useEnvio'
 interface Props {
   titulo: string
   rotuloConfirmar: string
+  /** Ícone do botão de confirmar, o mesmo da ação que abriu o diálogo. */
+  icone?: LucideIcon
   /** Botão de confirmar em vermelho, para ações destrutivas. */
   perigo?: boolean
   /** Lança `ErroValidacao` para mostrar os erros sem fechar. */
@@ -24,6 +27,7 @@ interface Props {
 export function Dialogo({
   titulo,
   rotuloConfirmar,
+  icone: Icone,
   perigo = false,
   onConfirmar,
   onFechar,
@@ -62,6 +66,7 @@ export function Dialogo({
             type="submit"
             className={perigo ? botaoPerigo : botaoPrimario}
           >
+            {Icone && <Icone className="size-4" />}
             {rotuloConfirmar}
           </button>
         </div>
