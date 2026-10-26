@@ -1,4 +1,5 @@
 import { addDays, format, parseISO } from 'date-fns'
+import { Ban, CalendarPlus, RotateCcw, Save, Trash2, Undo2 } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { assinaturasRepo } from '../../db/assinaturasRepo'
 import { ErroValidacao } from '../../db/esquemas'
@@ -44,6 +45,7 @@ export function DialogoVigencia({ assinatura, onFechar }: Props) {
     <Dialogo
       titulo={reativacao ? 'Reativar Assinatura' : 'Nova Vigência'}
       rotuloConfirmar={reativacao ? 'Reativar' : 'Registrar'}
+      icone={reativacao ? RotateCcw : CalendarPlus}
       onFechar={onFechar}
       onConfirmar={(dados) =>
         gravar(
@@ -68,12 +70,13 @@ export function DialogoCancelar({ assinatura, onFechar }: Props) {
     <Dialogo
       titulo="Cancelar Assinatura"
       rotuloConfirmar="Cancelar Assinatura"
+      icone={Ban}
       perigo
       onFechar={onFechar}
       onConfirmar={async (dados) => {
         const data = String(dados.get('fim') ?? '')
         if (data === '') {
-          throw new ErroValidacao(['Informe a Data de cancelamento.'])
+          throw new ErroValidacao(['Informe a Data de cancelamento.'], ['fim'])
         }
         await gravar(cancelar(assinatura, data), 'Cancelamento registrado.')
       }}
@@ -101,6 +104,7 @@ export function DialogoEditar({
     <Dialogo
       titulo="Editar Assinatura"
       rotuloConfirmar="Salvar"
+      icone={Save}
       onFechar={onFechar}
       onConfirmar={(dados) =>
         gravar(
@@ -122,6 +126,7 @@ export function DialogoDesfazer({ assinatura, onFechar }: Props) {
     <Dialogo
       titulo="Desfazer último registro"
       rotuloConfirmar="Desfazer"
+      icone={Undo2}
       onFechar={onFechar}
       onConfirmar={() =>
         gravar(desfazerUltimo(assinatura)!, 'Último registro desfeito.')
@@ -144,6 +149,7 @@ export function DialogoExcluir({ assinatura, onFechar }: Props) {
     <Dialogo
       titulo="Excluir Assinatura"
       rotuloConfirmar="Excluir"
+      icone={Trash2}
       perigo
       onFechar={onFechar}
       onConfirmar={async () => {

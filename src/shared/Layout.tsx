@@ -1,13 +1,20 @@
+import {
+  DatabaseBackup,
+  LayoutDashboard,
+  Repeat,
+  Settings,
+  Tags,
+} from 'lucide-react'
 import { NavLink, Outlet } from 'react-router'
 import { AvisosProvider } from './Avisos'
 import { focoVisivel } from './estilos'
 
 const links = [
-  { to: '/', rotulo: 'Painel', emoji: '📊' },
-  { to: '/assinaturas', rotulo: 'Assinaturas', emoji: '🔁' },
-  { to: '/categorias', rotulo: 'Categorias', emoji: '🏷️' },
-  { to: '/backup', rotulo: 'Backup', emoji: '💾' },
-  { to: '/configuracoes', rotulo: 'Configurações', emoji: '⚙️' },
+  { to: '/', rotulo: 'Painel', Icone: LayoutDashboard },
+  { to: '/assinaturas', rotulo: 'Assinaturas', Icone: Repeat },
+  { to: '/categorias', rotulo: 'Categorias', Icone: Tags },
+  { to: '/backup', rotulo: 'Backup', Icone: DatabaseBackup },
+  { to: '/configuracoes', rotulo: 'Configurações', Icone: Settings },
 ]
 
 export function Layout() {
@@ -35,7 +42,7 @@ export function Layout() {
             </span>
             <nav aria-label="Principal">
               <ul className="flex flex-wrap gap-1">
-                {links.map(({ to, rotulo, emoji }) => (
+                {links.map(({ to, rotulo, Icone }) => (
                   <li key={to}>
                     <NavLink
                       to={to}
@@ -48,7 +55,7 @@ export function Layout() {
                         }`
                       }
                     >
-                      <span aria-hidden="true">{emoji}</span>
+                      <Icone className="size-4" />
                       {rotulo}
                     </NavLink>
                   </li>

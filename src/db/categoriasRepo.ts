@@ -12,9 +12,10 @@ async function garantirNomeUnico(categoria: Categoria) {
     )
     .first()
   if (repetida !== undefined) {
-    throw new ErroValidacao([
-      `Já existe uma Categoria chamada "${repetida.nome}".`,
-    ])
+    throw new ErroValidacao(
+      [`Já existe uma Categoria chamada "${repetida.nome}".`],
+      ['nome'],
+    )
   }
 }
 
@@ -63,12 +64,16 @@ export const categoriasRepo = {
           ])
         }
         if (destinoId === id) {
-          throw new ErroValidacao([
-            'Escolha uma Categoria de destino diferente da excluída.',
-          ])
+          throw new ErroValidacao(
+            ['Escolha uma Categoria de destino diferente da excluída.'],
+            ['destino'],
+          )
         }
         if ((await db.categorias.get(destinoId)) === undefined) {
-          throw new ErroValidacao(['A Categoria de destino não existe.'])
+          throw new ErroValidacao(
+            ['A Categoria de destino não existe.'],
+            ['destino'],
+          )
         }
         await emUso.modify({ categoriaId: destinoId })
       }

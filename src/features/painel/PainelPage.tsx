@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { useAssinaturas, useCategorias, usePreferencias } from '../../db/hooks'
@@ -25,7 +26,9 @@ import { GastoPorCategoria } from './GastoPorCategoria'
 
 const cabecalho = (
   <div>
-    <h1 className={tituloPagina}>Painel</h1>
+    <h1 className={tituloPagina}>
+      Painel <span aria-hidden="true">📊</span>
+    </h1>
     <p className="mt-2 text-texto-suave">
       Resumo de gastos e próximos vencimentos.
     </p>
@@ -59,6 +62,7 @@ export function PainelPage() {
           <EstadoVazio icone="assinaturas">
             <p>Nenhuma Assinatura cadastrada.</p>
             <Link to="/assinaturas/nova" className={`${botaoPrimario} mt-1`}>
+              <Plus className="size-4" />
               Cadastrar a primeira Assinatura
             </Link>
           </EstadoVazio>

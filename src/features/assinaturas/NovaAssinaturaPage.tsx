@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { assinaturasRepo } from '../../db/assinaturasRepo'
@@ -29,10 +30,16 @@ function lerVigencias(dados: FormData, gratuito: boolean): Vigencia[] {
   if (!gratuito) return [paga]
   const primeira = String(dados.get('primeiraCobranca') ?? '')
   if (primeira === '') {
-    throw new ErroValidacao(['Informe a data da primeira Cobrança.'])
+    throw new ErroValidacao(
+      ['Informe a data da primeira Cobrança.'],
+      ['primeiraCobranca'],
+    )
   }
   if (primeira <= paga.inicio) {
-    throw new ErroValidacao(['A primeira Cobrança deve ser depois do início.'])
+    throw new ErroValidacao(
+      ['A primeira Cobrança deve ser depois do início.'],
+      ['primeiraCobranca'],
+    )
   }
   return [
     { ...paga, valorCentavos: 0 },
@@ -57,14 +64,16 @@ export function NovaAssinaturaPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className={tituloPagina}>Nova Assinatura</h1>
+      <h1 className={tituloPagina}>
+        Nova Assinatura <span aria-hidden="true">✨</span>
+      </h1>
       {categorias === undefined ? (
         <p className="text-texto-suave">Carregando…</p>
       ) : (
         <form
           noValidate
           onSubmit={enviar}
-          className={`${cartao} flex max-w-2xl flex-col gap-4`}
+          className={`${cartao} flex flex-col gap-4`}
         >
           <CamposBasicos categorias={categorias} />
           <CamposVigencia padrao={{ inicio: hoje() }} />
@@ -78,14 +87,17 @@ export function NovaAssinaturaPage() {
             Começa com Período gratuito
           </label>
           {gratuito && (
-            <label className={rotulo}>
-              Primeira Cobrança em
-              <input type="date" name="primeiraCobranca" className={campo} />
-            </label>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <label className={rotulo}>
+                Primeira Cobrança em
+                <input type="date" name="primeiraCobranca" className={campo} />
+              </label>
+            </div>
           )}
           <ListaErros erros={erros} />
           <div className="flex gap-2">
             <button type="submit" className={botaoPrimario}>
+              <Check className="size-4" />
               Cadastrar
             </button>
             <Link to="/assinaturas" className={botaoSecundario}>

@@ -5,11 +5,14 @@ import type { Assinatura } from '../domain/tipos'
 /** Dados recusados na gravação; `erros` traz as mensagens em pt-BR. */
 export class ErroValidacao extends Error {
   erros: string[]
+  /** Nomes (`name`) dos campos do formulário com erro, para destacá-los. */
+  campos: string[]
 
-  constructor(erros: string[]) {
+  constructor(erros: string[], campos: string[] = []) {
     super(erros.join(' '))
     this.name = 'ErroValidacao'
     this.erros = erros
+    this.campos = campos
   }
 }
 
@@ -81,10 +84,19 @@ function mensagens(erro: z.ZodError): string[] {
   )
 }
 
+/** Campo do formulário de cada problema: o último trecho do caminho. */
+function campos(erro: z.ZodError): string[] {
+  return erro.issues.map(({ path }) => {
+    const ultimo = String(path.at(-1) ?? '')
+    return ultimo === 'valorCentavos' ? 'valor' : ultimo
+  })
+}
+
 /** Devolve os dados validados (e normalizados) ou lança `ErroValidacao`. */
 export function validar<T>(esquema: z.ZodType<T>, dados: unknown): T {
   const resultado = esquema.safeParse(dados)
-  if (!resultado.success) throw new ErroValidacao(mensagens(resultado.error))
+  if (!resultado.success)
+    throw new ErroValidacao(mensagens(resultado.error), campos(resultado.error))
   return resultado.data
 }
 

@@ -94,6 +94,15 @@ describe('NovaAssinaturaPage', () => {
     const alerta = await screen.findByRole('alert')
     expect(alerta).toHaveTextContent('Informe a data de início.')
     expect(alerta).toHaveTextContent('Informe o valor em reais, como 39,90.')
+    expect(screen.getByLabelText('Início')).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
+    expect(screen.getByLabelText('Valor')).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
+    expect(screen.getByLabelText('Serviço')).not.toHaveAttribute('aria-invalid')
 
     await preencher('Início', '2026-01-31')
     await preencher('Valor', '39,90')
@@ -101,6 +110,11 @@ describe('NovaAssinaturaPage', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'O Serviço não pode ficar vazio.',
     )
+    expect(screen.getByLabelText('Serviço')).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
+    expect(screen.getByLabelText('Valor')).not.toHaveAttribute('aria-invalid')
     expect(await db.assinaturas.count()).toBe(0)
   })
 
@@ -113,6 +127,10 @@ describe('NovaAssinaturaPage', () => {
     await cadastrar()
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Informe a data da primeira Cobrança.',
+    )
+    expect(screen.getByLabelText('Primeira Cobrança em')).toHaveAttribute(
+      'aria-invalid',
+      'true',
     )
 
     await preencher('Primeira Cobrança em', '2026-01-31')

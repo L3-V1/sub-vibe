@@ -56,7 +56,7 @@ export function GastoPorCategoria({
             ))}
           </ul>
 
-          <div className="overflow-x-auto">
+          <div className="-mx-4 overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className={cabecalhoTabela}>
                 <tr>

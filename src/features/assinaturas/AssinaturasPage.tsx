@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { useAssinaturas, useCategorias } from '../../db/hooks'
@@ -31,10 +32,13 @@ export function AssinaturasPage() {
   const cabecalho = (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className={tituloPagina}>Assinaturas</h1>
+        <h1 className={tituloPagina}>
+          Assinaturas <span aria-hidden="true">🔁</span>
+        </h1>
         <p className="mt-2 text-texto-suave">Suas Assinaturas recorrentes.</p>
       </div>
       <Link to="/assinaturas/nova" className={botaoPrimario}>
+        <Plus className="size-4" />
         Nova Assinatura
       </Link>
     </div>
@@ -57,6 +61,7 @@ export function AssinaturasPage() {
           <EstadoVazio icone="assinaturas">
             <p>Nenhuma Assinatura cadastrada.</p>
             <Link to="/assinaturas/nova" className={`${botaoPrimario} mt-1`}>
+              <Plus className="size-4" />
               Cadastrar a primeira Assinatura
             </Link>
           </EstadoVazio>
@@ -80,7 +85,7 @@ export function AssinaturasPage() {
     <section className="flex flex-col gap-6">
       {cabecalho}
 
-      <div className="flex flex-wrap gap-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <label className={rotulo}>
           Estado
           <select

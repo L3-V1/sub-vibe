@@ -1,3 +1,4 @@
+import { Pencil, Plus, Save, Trash2 } from 'lucide-react'
 import { useId, useState } from 'react'
 import { categoriasRepo } from '../../db/categoriasRepo'
 import { useAssinaturas, useCategorias } from '../../db/hooks'
@@ -39,7 +40,9 @@ export function CategoriasPage() {
   return (
     <section className="flex flex-col gap-6">
       <div>
-        <h1 className={tituloPagina}>Categorias</h1>
+        <h1 className={tituloPagina}>
+          Categorias <span aria-hidden="true">🏷️</span>
+        </h1>
         <p className="mt-2 text-texto-suave">
           Organize suas Assinaturas por Categoria.
         </p>
@@ -48,17 +51,20 @@ export function CategoriasPage() {
       <form
         noValidate
         onSubmit={criacao.enviar}
-        className={`${cartao} flex max-w-md flex-col gap-3`}
+        className={`${cartao} flex flex-col gap-3`}
       >
-        <div>
-          <label htmlFor={idNome} className={rotulo}>
-            Nova Categoria
-          </label>
-          <div className="flex gap-2">
-            <input id={idNome} name="nome" className={campo} />
-            <button type="submit" className={`${botaoPrimario} mt-1`}>
-              Criar
-            </button>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor={idNome} className={rotulo}>
+              Nova Categoria
+            </label>
+            <div className="flex gap-2">
+              <input id={idNome} name="nome" className={campo} />
+              <button type="submit" className={`${botaoPrimario} mt-1`}>
+                <Plus className="size-4" />
+                Criar
+              </button>
+            </div>
           </div>
         </div>
         <ListaErros erros={criacao.erros} />
@@ -96,7 +102,8 @@ export function CategoriasPage() {
                       aria-label={`Renomear ${c.nome}`}
                       onClick={() => setRenomeando(c.id)}
                     >
-                      <span aria-hidden="true">✏️</span> Renomear
+                      <Pencil className="size-3.5" />
+                      Renomear
                     </button>
                     <button
                       type="button"
@@ -104,7 +111,8 @@ export function CategoriasPage() {
                       aria-label={`Excluir ${c.nome}`}
                       onClick={() => setExcluindo(c)}
                     >
-                      <span aria-hidden="true">🗑️</span> Excluir
+                      <Trash2 className="size-3.5" />
+                      Excluir
                     </button>
                   </span>
                 </div>
@@ -142,18 +150,21 @@ function FormularioRenomear({
 
   return (
     <form noValidate onSubmit={enviar} className="flex flex-col gap-2">
-      <label className={rotulo}>
-        Novo nome de {categoria.nome}
-        <input
-          name="nome"
-          defaultValue={categoria.nome}
-          autoFocus
-          className={campo}
-        />
-      </label>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className={rotulo}>
+          Novo nome de {categoria.nome}
+          <input
+            name="nome"
+            defaultValue={categoria.nome}
+            autoFocus
+            className={campo}
+          />
+        </label>
+      </div>
       <ListaErros erros={erros} />
       <span className="flex gap-2">
         <button type="submit" className={botaoPrimario}>
+          <Save className="size-4" />
           Salvar
         </button>
         <button type="button" className={botaoSecundario} onClick={onFechar}>
@@ -181,6 +192,7 @@ function DialogoExcluir({
     <Dialogo
       titulo="Excluir Categoria"
       rotuloConfirmar="Excluir"
+      icone={Trash2}
       perigo
       onFechar={onFechar}
       onConfirmar={async (dados) => {
