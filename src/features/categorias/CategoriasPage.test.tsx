@@ -35,6 +35,10 @@ describe('CategoriasPage', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Já existe uma Categoria chamada "Streaming".',
     )
+    expect(screen.getByLabelText('Nova Categoria')).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
   })
 
   it('renomeia inline', async () => {

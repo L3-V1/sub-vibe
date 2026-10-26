@@ -41,17 +41,19 @@ export function ConfiguracoesPage() {
           onSubmit={enviar}
           className={`${cartao} flex flex-col gap-3`}
         >
-          <label className={`${rotulo} max-w-xs`}>
-            Janela de vencimentos (dias)
-            <input
-              name="janelaVencimentosDias"
-              type="number"
-              min={1}
-              step={1}
-              defaultValue={preferencias.janelaVencimentosDias}
-              className={campo}
-            />
-          </label>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className={rotulo}>
+              Janela de vencimentos (dias)
+              <input
+                name="janelaVencimentosDias"
+                type="number"
+                min={1}
+                step={1}
+                defaultValue={preferencias.janelaVencimentosDias}
+                className={campo}
+              />
+            </label>
+          </div>
           <p className="text-sm text-texto-suave">
             Quantos dias à frente o Painel mostra em Próximos vencimentos.
           </p>

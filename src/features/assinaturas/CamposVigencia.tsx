@@ -37,7 +37,7 @@ export function CamposVigencia({
       </label>
       <fieldset>
         <legend className={rotulo}>Ciclo de cobrança</legend>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <label className="sr-only" htmlFor={`${id}-quantidade`}>
             A cada
           </label>
@@ -47,7 +47,7 @@ export function CamposVigencia({
             name="quantidade"
             min={1}
             defaultValue={padrao.ciclo?.quantidade ?? 1}
-            className={`${campo} w-20`}
+            className={campo}
           />
           <label className="sr-only" htmlFor={`${id}-unidade`}>
             Unidade

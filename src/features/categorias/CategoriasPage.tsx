@@ -53,16 +53,18 @@ export function CategoriasPage() {
         onSubmit={criacao.enviar}
         className={`${cartao} flex flex-col gap-3`}
       >
-        <div className="max-w-md">
-          <label htmlFor={idNome} className={rotulo}>
-            Nova Categoria
-          </label>
-          <div className="flex gap-2">
-            <input id={idNome} name="nome" className={campo} />
-            <button type="submit" className={`${botaoPrimario} mt-1`}>
-              <Plus className="size-4" />
-              Criar
-            </button>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor={idNome} className={rotulo}>
+              Nova Categoria
+            </label>
+            <div className="flex gap-2">
+              <input id={idNome} name="nome" className={campo} />
+              <button type="submit" className={`${botaoPrimario} mt-1`}>
+                <Plus className="size-4" />
+                Criar
+              </button>
+            </div>
           </div>
         </div>
         <ListaErros erros={criacao.erros} />
@@ -148,15 +150,17 @@ function FormularioRenomear({
 
   return (
     <form noValidate onSubmit={enviar} className="flex flex-col gap-2">
-      <label className={`${rotulo} max-w-md`}>
-        Novo nome de {categoria.nome}
-        <input
-          name="nome"
-          defaultValue={categoria.nome}
-          autoFocus
-          className={campo}
-        />
-      </label>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className={rotulo}>
+          Novo nome de {categoria.nome}
+          <input
+            name="nome"
+            defaultValue={categoria.nome}
+            autoFocus
+            className={campo}
+          />
+        </label>
+      </div>
       <ListaErros erros={erros} />
       <span className="flex gap-2">
         <button type="submit" className={botaoPrimario}>

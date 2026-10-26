@@ -76,7 +76,7 @@ export function DialogoCancelar({ assinatura, onFechar }: Props) {
       onConfirmar={async (dados) => {
         const data = String(dados.get('fim') ?? '')
         if (data === '') {
-          throw new ErroValidacao(['Informe a Data de cancelamento.'])
+          throw new ErroValidacao(['Informe a Data de cancelamento.'], ['fim'])
         }
         await gravar(cancelar(assinatura, data), 'Cancelamento registrado.')
       }}

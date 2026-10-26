@@ -29,9 +29,15 @@ export function BackupPage() {
   const { erros, enviar } = useEnvio(async () => {
     const arquivo = arquivoRef.current?.files?.[0]
     if (arquivo === undefined) {
-      throw new ErroValidacao(['Escolha um arquivo de backup.'])
+      throw new ErroValidacao(['Escolha um arquivo de backup.'], ['arquivo'])
     }
-    setBackup(lerBackup(await arquivo.text()))
+    const texto = await arquivo.text()
+    try {
+      setBackup(lerBackup(texto))
+    } catch (e) {
+      if (!(e instanceof ErroValidacao)) throw e
+      throw new ErroValidacao(e.erros, ['arquivo'])
+    }
   })
 
   async function exportar() {
@@ -83,16 +89,18 @@ export function BackupPage() {
         <p className="text-sm text-texto-suave">
           Substitui todos os dados atuais pelos do arquivo.
         </p>
-        <label className={`${rotulo} max-w-md`}>
-          Arquivo de backup
-          <input
-            ref={arquivoRef}
-            name="arquivo"
-            type="file"
-            accept="application/json,.json"
-            className={campo}
-          />
-        </label>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className={rotulo}>
+            Arquivo de backup
+            <input
+              ref={arquivoRef}
+              name="arquivo"
+              type="file"
+              accept="application/json,.json"
+              className={campo}
+            />
+          </label>
+        </div>
         <ListaErros erros={erros} />
         <button type="submit" className={`${botaoPrimario} self-start`}>
           <Upload className="size-4" />

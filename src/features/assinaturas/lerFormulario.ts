@@ -24,12 +24,17 @@ export function lerVigencia(dados: FormData): Vigencia {
   const inicio = texto(dados, 'inicio')
   const valorCentavos = lerMoeda(texto(dados, 'valor'))
   const erros: string[] = []
-  if (inicio === '') erros.push('Informe a data de início.')
+  const campos: string[] = []
+  if (inicio === '') {
+    erros.push('Informe a data de início.')
+    campos.push('inicio')
+  }
   if (valorCentavos === undefined) {
     erros.push('Informe o valor em reais, como 39,90.')
+    campos.push('valor')
   }
   if (erros.length > 0 || valorCentavos === undefined) {
-    throw new ErroValidacao(erros)
+    throw new ErroValidacao(erros, campos)
   }
   return {
     inicio,

@@ -16,7 +16,7 @@ export const botaoSecundario = `${botao} border border-borda-forte bg-vidro text
 export const botaoPequeno = `inline-flex items-center gap-1.5 rounded-full border border-borda-forte bg-vidro px-3 py-1 text-sm font-medium whitespace-nowrap text-texto transition-colors hover:bg-vidro-hover ${focoVisivel}`
 
 export const campo =
-  'mt-1 block w-full rounded-xl border border-borda-forte bg-campo px-3 py-2 text-sm font-normal text-texto placeholder:text-texto-suave/70 focus:border-acento focus:outline-2 focus:outline-acento/40'
+  'mt-1 block w-full rounded-xl border border-borda-forte bg-campo px-3 py-2 text-sm font-normal text-texto placeholder:text-texto-suave/70 focus:border-acento focus:outline-2 focus:outline-acento/40 aria-invalid:border-perigo aria-invalid:focus:outline-perigo/40'
 
 export const rotulo = 'block text-sm font-medium text-texto-suave'
 

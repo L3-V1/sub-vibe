@@ -240,7 +240,8 @@ describe('backup', () => {
     } catch (e) {
       erro = e
     }
-    expect(erro).toEqual(new ErroValidacao(erros))
+    expect(erro).toBeInstanceOf(ErroValidacao)
+    expect((erro as ErroValidacao).erros).toEqual(erros)
     expect(await tabelas()).toEqual(antes)
   })
 })

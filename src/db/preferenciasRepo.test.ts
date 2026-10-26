@@ -26,9 +26,12 @@ describe('preferenciasRepo', () => {
     await expect(
       preferenciasRepo.atualizar({ janelaVencimentosDias: dias }),
     ).rejects.toEqual(
-      new ErroValidacao([
-        'A janela de vencimentos deve ser um número inteiro de dias, maior ou igual a 1.',
-      ]),
+      new ErroValidacao(
+        [
+          'A janela de vencimentos deve ser um número inteiro de dias, maior ou igual a 1.',
+        ],
+        ['janelaVencimentosDias'],
+      ),
     )
     expect(await db.preferencias.count()).toBe(0)
   })

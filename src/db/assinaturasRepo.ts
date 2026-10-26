@@ -13,7 +13,10 @@ async function gravar(dados: Assinatura, modo: 'criar' | 'atualizar') {
       throw new ErroValidacao(['Assinatura não encontrada.'])
     }
     if ((await db.categorias.get(assinatura.categoriaId)) === undefined) {
-      throw new ErroValidacao(['A Categoria escolhida não existe.'])
+      throw new ErroValidacao(
+        ['A Categoria escolhida não existe.'],
+        ['categoriaId'],
+      )
     }
     await db.assinaturas.put(assinatura)
   })

@@ -30,10 +30,16 @@ function lerVigencias(dados: FormData, gratuito: boolean): Vigencia[] {
   if (!gratuito) return [paga]
   const primeira = String(dados.get('primeiraCobranca') ?? '')
   if (primeira === '') {
-    throw new ErroValidacao(['Informe a data da primeira Cobrança.'])
+    throw new ErroValidacao(
+      ['Informe a data da primeira Cobrança.'],
+      ['primeiraCobranca'],
+    )
   }
   if (primeira <= paga.inicio) {
-    throw new ErroValidacao(['A primeira Cobrança deve ser depois do início.'])
+    throw new ErroValidacao(
+      ['A primeira Cobrança deve ser depois do início.'],
+      ['primeiraCobranca'],
+    )
   }
   return [
     { ...paga, valorCentavos: 0 },
@@ -81,10 +87,12 @@ export function NovaAssinaturaPage() {
             Começa com Período gratuito
           </label>
           {gratuito && (
-            <label className={`${rotulo} max-w-xs`}>
-              Primeira Cobrança em
-              <input type="date" name="primeiraCobranca" className={campo} />
-            </label>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <label className={rotulo}>
+                Primeira Cobrança em
+                <input type="date" name="primeiraCobranca" className={campo} />
+              </label>
+            </div>
           )}
           <ListaErros erros={erros} />
           <div className="flex gap-2">
